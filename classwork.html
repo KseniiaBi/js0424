@@ -10,125 +10,126 @@
 	
 	<script>
 		
+		// conversion of primitive types
+
+		// to string
+		// string + everything = string
+
+		// to number 
+		// +'5' = 5 
+		// '5' - 2
+		// true = 1 false = 0
+		// 0 => null, false, '', 
+		// +undefined = NaN 
+
+		// to boolean
+		// 0 = false, any other = true
 
 
-		// 1) написать код, который принимает через промпт коэффициенты квадратного уравнения и считает его корни
-		
-		// const a = +prompt('Type argument A');
-		// const b = +prompt('Type argument B');
-		// const c = +prompt('Type argument C');
+		// factorial !5 = 1*2*3*4*5
 
-		// console.log(`${a}x^2 + ${b}x + ${c}`);
+		let factorial = 1;
+		let n = 5;
 
-		// const d = b*b - 4*a*c;
-
-		// console.log(`D = ${d}`);
-
-		// if(d > 0){
-		// 	const x1 = (-b - Math.sqrt(d))/(2*a);
-		// 	const x2 = (-b + Math.sqrt(d))/(2*a);
-
-		// 	console.log(`x1 = ${x1}, x2 = ${x2}`);
-		// }
-		// else if(d === 0){
-		// 	const x = -b/(2*a);
-		// 	console.log(`x = ${x}`);
-		// }
-		// else{
-		// 	console.warn(`Действительных корней нет`);
-		// }
-		
-		
-		// 2) спросите у пользователя его имя, город, есть ли у него питомец и если да, то его имя, а если нет, то не скучно ли ему без такового
-		
-		// const name = prompt('Type your name');
-		// const city = prompt('Where are you from?');
-		// const hasPet = confirm('Do you have a pet?');
-		// let message = `Hi ${name} from ${city}!`;
-
-		// if(hasPet){
-		// 	const petname = prompt('What is your pet name?');
-		// 	message += `Greetings to ${petname}`;
-		// }
-		// else{
-		// 	message += `Isn't boring life without pet?`;
-		// }
-
-		// console.log(message);
-		
-		
-		// 3) спросите у пользователя число от 1 до 60 и выведите в какую четверть часа оно попадает
-		
-			// let minutes = +prompt('Type any number 1-60', 1);
-
-			// if(minutes >= 1 && minutes < 15){
-			// 	console.log('First quarter');
-			// }
-			// else if(minutes >= 15 && minutes < 30){
-			// 	console.log('Second quarter');
-			// }
-			// else if(minutes >= 30 && minutes < 45){
-			// 	console.log('Third quarter');
-			// }
-			// else if(minutes >= 45 && minutes <= 60){
-			// 	console.log('Fourth quarter');
-			// }
-			// else{
-			// 	console.warn('Incorrect input!');
-			// }
-		
-		// 4) спросите у пользователя число от 1 до  4 и выведите время года
-		
-		// const season = +prompt('Type any number 1-4');
-		// switch(season){
-		// 	case 1: console.log('Winter');
-		// 			break;
-		// 	case 2: console.log('Spring');
-		// 			break;
-		// 	case 3: console.log('Summer');
-		// 			break;
-		// 	case 4: console.log('Fall');
-		// 			break;
-		// 	default: console.warn('Not a season');
-		// }
-		
-		// 5) если число а больше б, то отнимите от него 3, а если меньше, то умножте на 2. результат вывести в консоль
-		
-		let a = +prompt('Type number A');
-		const b = +prompt('Type number B');
-
-		if(a > b){
-			a -= 3
-		}
-		else{
-			a *= 2;
-		}
-		console.log(`a: ${a}`);
-		
-		// 6) если число а больше 10 и меньше 20, то выведите в консоль "Яблоко", иначе - "Апельсин"
-		
-		if(a > 10 && a < 20){
-			console.log('Apple');
-		}
-		else{
-			console.log('Orange');
-		}
-		
-		// 7) с помощью цикла посчитайте среднее арифметическое чисел от 4 до 38
-
-		let range = 4;
-		let i = 0;
-		let sum = 0;
-
-		while (range <= 38){
-			sum += range;
-			range++;
-			i++;
+		for(let i = 1; i <= n; i++){
+			factorial *= i;
 		}
 
-		const sr = sum/i;
+		console.log(factorial);
 
-		console.log(sr);
+
+		// fibonacci  1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144 ...
+
+		let m = 11;
+		let a = 1;
+		let b = 1;
+		let c;
+
+		for(let i = 3; i <= m; i++){
+			c = a + b;
+			a = b;
+			b = c;
+		}
+
+		console.log(c);
+
+
+		// l > 0 ? number of even numbers 0-l
+
+		// const l = +prompt('Type l');
+
+		// if(l > 0){
+		// 	let count = 0;
+		// 	let i = 1;
+		// 	while (i <= l){
+		// 		if(i %  2 === 0){
+		// 			count++;
+		// 		}
+		// 		i++;
+		// 	}
+		// 	console.log(`number of even numbers 0-${l} is ${count}`);
+		// }
+		// else {
+		// 	console.error('L < 0');
+		// }
+
+		// x = 1000 /2 -> <50
+
+		let num = 0;
+
+		for(var x = 1000; x > 50; x/=2){
+			num++;
+		}
+		console.log(`x = ${x}, iterations: ${num}`);
+
+
+		// 1 floor 0, 2-4 20 uah, 5-7 30uah, 8+ 40uah
+
+		// const floor = +prompt('Type floor for delivery');
+		
+		// let cost = 0;
+
+		// for(let i = 2; i <= floor; i++ ){
+		// 	if(i >= 2 && i <= 4){
+		// 		cost += 20;
+		// 	}
+		// 	else if(i >= 5 && i <= 7){
+		// 		cost += 30;
+		// 	}
+		// 	else {
+		// 		cost += 40;
+		// 	}
+		// }
+
+		// console.log(`delivery cost ${cost} UAH`);
+
+
+		// 'Hello' to console
+
+		const text = 'Hello World';
+		for(let i = 0; i < text.length; i++){
+			if(text[i] === ' '){
+				continue;
+			}
+			console.log(text[i]);
+		}
+
+
+		// -1-2-3-4-5-6-7-8-9-10-
+
+		let str = '-';
+
+		for(let i = 1; i <= 10; i++){
+			str += `${i}-`;
+		}
+		console.log(str);
+
+
+		// test = true correct / incorrect
+
+		let test = false;
+
+		console.log(test ? 'correct' : 'incorrect');
 
 
 	</script>
