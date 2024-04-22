@@ -9,231 +9,129 @@
 	
 	
 	<script>
-		'use strict'
-		// JS data types
-
-		// ES1 - now
-
-		// number incl +-0 +-Infinity, NaN;  * up 2^54-1
-		// string - '', "", ``
-		// undefined
-		// null
-		// boolean - true/false
 		
-		// ES6 (2015)
-		// Symbol
-
-		// ES7
-		// BigInt 
-
-		// 7 primitive types + Object
-
-		// variables  - let, const, var 
-
-		let a; // undefined
-		let b, c, d; // undefined
-		const e = 'Hello World'; // string
-
-		b = 10; // number
-		c = true; // boolean
-		d = Symbol('name');
-
-		let f = 12112123231212n;
-
-
-		// alert(f);
-		// const g = confirm('Do you like Javasript?');
-		// const n = +prompt('Type a number', 0);
-		// typeof n === string
-		// console.log(a);
-		// console.warn(b);
-		// console.error(c);
-		
-		// operators
-
-		// math:  + - / *  % (остаток от деления) ++ --
-
-		// logical: == === ! != !== > < >= <= && ||
-
-
-		// conditions
-
-		a = 14;
-
-		if(a > b){
-			console.log('a > b');
-		}
-		else if(a === b){
-			console.log('a = b');
-		}
-		else{
-			console.log('a < b');
-		}
-
-		// let day = +prompt('Type any number 1-7');
-
-		// switch (day){
-		// 	case 1: console.log('Monday');
-		// 			break;
-		// 	case 2: console.log('Tuesday');
-		// 			break;
-		// 	case 3: console.log('Wed');
-		// 			break;
-		// 	case 4: console.log('Thu');
-		// 			break;
-		// 	case 5: console.log('Fri');
-		// 			break;
-		// 	case 6: console.log('Sat');
-		// 			break;
-		// 	case 7: console.log('Sun');
-		// 			break;
-		// 	default: console.log('Not a day');
-		// 			break;
-		// }
-
-		// ternar oper
-		// var = condition ? true : false
-
-		const min = a < b ? a : b;
-
-		let user;
-		if(user == undefined){
-			console.log('Hello, Stranger');
-		}
-		else{
-			console.log(`Hello, ${user}`);
-		}
-
-		console.log(`Hello, ${user != undefined ? user : 'Stranger'}`);
-
-
-		// loops
-
-		for(let i = 0; i <= 5; i++){
-			// loop body
-			console.log(`i: ${i}`);
-		}
-		// console.log(i)// ReferenceError: i is not defined
-
-		// for (var i = 0; i < 5; i++){
-		// 	console.log(`i: ${i}`);
-		// }
-		// console.log(i);
-
-		let k = 10;
-		while(k > 5){
-			console.warn(`k: ${k}`);
-			k--;
-		}
-		
-		let j = 0;
-		do{
-			console.log(`j: ${j}`);
-			j++;
-		}while(j < 2);
-
-
-		// practice
-
-		// # # # #
-		//  # # # #
-		// # # # #
-		//  # # # #
-		// ...
-
-
-		const size = 8;
-		const black = '#';
-		const white = ' ';
-
-		for(let i = 0; i < size; i++){
-			let str = '';
-			for(let j = 0; j < size; j++){
-				// если (четная строка и четный символ или нечетная строка и нечетный символ )
-				if(i % 2 === 0 && j % 2 == 0 || i % 2 !== 0 && j % 2 !== 0){
-					str += black;
-				}
-				else{
-					str += white;
-				}
-			}
-			console.log(str);
-		}
-
-
-		// console i 1 -> 50, /3 'fizz', /5 'buzz', /3 && /5 'fizzbuzz'
-
-		for(let i = 1; i <= 50; i++){
-			if(i % 3 === 0 && i % 5 === 0){
-				console.log('fizzbuzz');
-			}
-			else if(i % 5 === 0){
-				console.log('buzz');
-			}
-			else if(i % 3 === 0) {
-				console.log('fizz');
-			}
-			else{
-				console.log(i);
-			}
-		}
-
-
-		// *
-		// **
-		// ***
-		// ****
-		// *****
-		// ****
-		// ***
-		// **
-		// *
-
-
-		// for(let i = 1; i <= 5; i++){
-		// 	let str = '';
-		// 	for(let j = 0; j < i; j++){
-		// 		str += '*';
-		// 	}
-		// 	console.log(str);
-		// }
-
-
-		const triangle = +prompt('Type number of lines');
-		let med = Math.ceil(triangle / 2);
-		console.log(`size: ${triangle}, med: ${med}`);
-
-		for(let i = 1; i <= triangle; i++){
-			let str = '';
-			if(i <= med){
-				for(let j = 0; j < i; j++){
-					str += '*';
-				}
-			}
-			else{
-				for(let j = triangle; j >= i; j--){
-					str += '*';
-				}
-			}
-			console.log(str);
-		}
 
 
 		// 1) написать код, который принимает через промпт коэффициенты квадратного уравнения и считает его корни
+		
+		// const a = +prompt('Type argument A');
+		// const b = +prompt('Type argument B');
+		// const c = +prompt('Type argument C');
+
+		// console.log(`${a}x^2 + ${b}x + ${c}`);
+
+		// const d = b*b - 4*a*c;
+
+		// console.log(`D = ${d}`);
+
+		// if(d > 0){
+		// 	const x1 = (-b - Math.sqrt(d))/(2*a);
+		// 	const x2 = (-b + Math.sqrt(d))/(2*a);
+
+		// 	console.log(`x1 = ${x1}, x2 = ${x2}`);
+		// }
+		// else if(d === 0){
+		// 	const x = -b/(2*a);
+		// 	console.log(`x = ${x}`);
+		// }
+		// else{
+		// 	console.warn(`Действительных корней нет`);
+		// }
+		
+		
 		// 2) спросите у пользователя его имя, город, есть ли у него питомец и если да, то его имя, а если нет, то не скучно ли ему без такового
+		
+		// const name = prompt('Type your name');
+		// const city = prompt('Where are you from?');
+		// const hasPet = confirm('Do you have a pet?');
+		// let message = `Hi ${name} from ${city}!`;
+
+		// if(hasPet){
+		// 	const petname = prompt('What is your pet name?');
+		// 	message += `Greetings to ${petname}`;
+		// }
+		// else{
+		// 	message += `Isn't boring life without pet?`;
+		// }
+
+		// console.log(message);
+		
+		
 		// 3) спросите у пользователя число от 1 до 60 и выведите в какую четверть часа оно попадает
+		
+			// let minutes = +prompt('Type any number 1-60', 1);
+
+			// if(minutes >= 1 && minutes < 15){
+			// 	console.log('First quarter');
+			// }
+			// else if(minutes >= 15 && minutes < 30){
+			// 	console.log('Second quarter');
+			// }
+			// else if(minutes >= 30 && minutes < 45){
+			// 	console.log('Third quarter');
+			// }
+			// else if(minutes >= 45 && minutes <= 60){
+			// 	console.log('Fourth quarter');
+			// }
+			// else{
+			// 	console.warn('Incorrect input!');
+			// }
+		
 		// 4) спросите у пользователя число от 1 до  4 и выведите время года
+		
+		// const season = +prompt('Type any number 1-4');
+		// switch(season){
+		// 	case 1: console.log('Winter');
+		// 			break;
+		// 	case 2: console.log('Spring');
+		// 			break;
+		// 	case 3: console.log('Summer');
+		// 			break;
+		// 	case 4: console.log('Fall');
+		// 			break;
+		// 	default: console.warn('Not a season');
+		// }
+		
 		// 5) если число а больше б, то отнимите от него 3, а если меньше, то умножте на 2. результат вывести в консоль
+		
+		let a = +prompt('Type number A');
+		const b = +prompt('Type number B');
+
+		if(a > b){
+			a -= 3
+		}
+		else{
+			a *= 2;
+		}
+		console.log(`a: ${a}`);
+		
 		// 6) если число а больше 10 и меньше 20, то выведите в консоль "Яблоко", иначе - "Апельсин"
+		
+		if(a > 10 && a < 20){
+			console.log('Apple');
+		}
+		else{
+			console.log('Orange');
+		}
+		
 		// 7) с помощью цикла посчитайте среднее арифметическое чисел от 4 до 38
+
+		let range = 4;
+		let i = 0;
+		let sum = 0;
+
+		while (range <= 38){
+			sum += range;
+			range++;
+			i++;
+		}
+
+		const sr = sum/i;
+
+		console.log(sr);
+
 
 	</script>
 
-	<!-- 
-		https://www.w3schools.com/jsref/default.asp
-		https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
-		https://uk.javascript.info/
-		https://karmazzin.gitbook.io/eloquentjavascript_ru/
-	-->
 </body>
 </html>
