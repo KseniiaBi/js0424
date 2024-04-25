@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>JS FE</title> 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+	
+	
+	<script>
+		
+		// Arrays
+
+		let a = new Array(10);
+		let b = [];
+		let c = [1,2,3];
+
+		b[1] = 5;
+		a[10] = 'Hello';
+
+		// delete c[1];
+
+		c[1] = 'Javascript';
+
+		c[3] = [4,5,6];
+
+		let d = [1,2,3, [4,5,6, [7,8,9, [10, [11,12, [13]]]]]];
+
+		console.log(d[3][3][3][1][2][0]);
+
+		// arrays are mutable 
+
+		let str = 'hello World';
+		str[0] = 'H';
+		console.log(str);
+
+		// strings are immutable
+
+
+		// 1 
+		let arr = [1,2,3,false, 'text', true, null, '', 10, -22, undefined, 87, -4];
+		let result = [];
+		let index = 0;
+
+		for(let i = 0; i < arr.length; i++){
+			if(typeof arr[i] === 'number' && arr[i] > 0){
+				result[index] = arr[i];
+				index++;
+			}
+		}
+		console.log(result);
+
+
+		// 2 
+
+		let arr2 = [];
+
+		for(let i = 2; i <= 10; i++){
+			arr2[i-2] = i*i;
+		}
+
+		console.log(arr2);
+
+
+		// 3 
+		// all dividers of number
+
+		let num = 30 //+prompt('Type any num 1-100');
+
+		let arr3 = [];
+		let ind = 0;
+
+		for(let i = 1; i <= num; i++){
+			if(num % i === 0){
+				arr3[ind] = i;
+				ind++;
+			}
+		}
+		console.log(arr3);
+
+
+		// 4
+
+		let arr4 = [9,8,7,6,5,4,3,2,1]; // -> [1,2,3,4,5,6,7,8,9]
+		let rev = [];
+
+		for(let i = 0; i < arr4.length; i++){
+			rev[i] = arr4[arr4.length - 1 - i];
+		}
+
+		console.log(rev);
+
+
+		// 5
+
+		let arr5 = [6,1,9,3,7,2,8,4,5];  //-> [1,2,3,4,5,6,7,8,9]
+
+		for(let i = 0; i < arr5.length; i++){
+			for(let j = 0; j < arr5.length -1; j++){
+				if(arr5[j] > arr5[j+1]){
+					let max = arr5[j];
+					arr5[j] = arr5[j+1];
+					arr5[j+1] = max;
+				}
+			}
+		}
+		console.log(arr5);
+
+
+		// 6 
+		let arr6 = [1,5,2,4,13,10,0]; // find 4, log yes/no
+		let hasFour = false;
+		
+		for(let i = 0; i < arr6.length; i++){
+			if(arr6[i] === 4){
+				hasFour = true;
+			}
+		}
+		console.log(hasFour ? 'yes' : 'no');
+
+
+		// 7 
+
+		let arr7 = [1,5,8,-12,4,6,'6',3,8,8,1]; // find two same elements, log yes/no
+		let hasSame = false;
+
+		for(let i = 0; i < arr7.length ; i++){
+			if(arr7[i] === arr7[i+1]){
+				hasSame = true;
+			}
+		}
+		console.log(hasSame ? 'yes' : 'no');
+
+
+		// 8
+
+		let arr8 = [10,20,30, 40, 50, 60, 100, 200, 300, 500, 1000];
+		// how many nums starts from 1,3,5
+
+		let count = 0;
+
+		for(let i = 0; i < arr8.length; i++){
+			let str = arr8[i].toString(); // `${arr8[i]}`  ''+arr8[i]
+			if(str[0] == 1 || str[0] == 3 || str[0] == 5){
+				count++;
+			}
+		}
+		console.log(count);
+
+
+		// 9 
+
+		let arr9 = [1,2,3, [4,5,6], [7,8,9], [10,11,12], [13, 14, 15]];
+		let sum = 0;
+
+		for(let i = 0; i < arr9.length; i++){
+			if(typeof arr9[i] === 'number'){
+				sum += arr9[i];
+			}
+			else{
+				for(let j = 0; j < arr9[i].length; j++){
+					sum += arr9[i][j];
+				}
+			}
+		}
+
+		console.log(sum);
+
+
+		// 10 
+
+		let txt = 'Hello'; // -> arr
+		let arr10 = [];
+		for(let i = 0; i < txt.length; i++){
+			arr10[i] = txt[i];
+		}
+
+		console.log(arr10);
+		
+
+		// 11 
+
+		let text = 'Hello world'; // -> []
+		let arr11 = [];
+		let k = 0;
+
+		for(let i = 0; i < text.length; i++){
+			let correct = true;
+			for(let j = 0; j < arr11.length; j++){
+				if(arr11[j] === text[i]){
+					correct = false;
+				}
+			}
+			if(text[i] === ' '){
+				correct = false;
+			}
+			if (correct){
+				arr11[k] = text[i];
+				k++;
+			}
+		}
+
+		console.log(arr11);
+
+
+		// 12
+
+		let arr12 = ['j', 'e', 'r', 'q', 'x', 'a', 'f', 'y', 'c', 'm', 'b']; // -> abc...xyz
+
+		let abc = '';
+
+		for(let i = 0; i < arr12.length; i++){
+			for(let j = 0; j < arr12.length -1; j++){
+				if(arr12[j] > arr12[j+1]){
+					let max = arr12[j];
+					arr12[j] = arr12[j+1];
+					arr12[j+1] = max;
+				}
+			}
+		}
+
+		for(let i = 0; i < arr12.length; i++){
+			abc += arr12[i];
+		}
+		
+		console.log(abc);
+
+
+		// 13
+
+		let arr13 = [-4,5,6,-22,67, 92, -43, 5, -9, 14, 54, 76, -80];
+
+		let summ = 0;
+
+		for(let i = 0; i < arr13.length; i++){
+			if(arr13[i] < 0){
+				summ += arr13[i];
+			}
+		}
+		console.log(summ);
+
+
+		// 14 
+
+		let alph = 'abcdefghijklmnopqrstuvwxyz';
+		let arr14 = [];
+		let l = 0;
+
+		for(let i = 0; i <= alph.length; i++){
+			if(alph[i] === 'a' || alph[i] === 'e' || alph[i] === 'i' ||
+			alph[i] === 'o' || alph[i] === 'u' ){
+				arr14[l] = i;
+				l++;
+			}
+		}
+		console.log(arr14);
+
+		// turn to keycodes ->
+
+		for(let i = 0; i <  arr14.length; i++){
+			arr14[i] += 65;
+		}
+
+		console.log(`keycodes for english sounds are: ${arr14.toString()}`);
+
+		
+
+
+	</script>
+
+</body>
+</html>
