@@ -9,309 +9,75 @@
 	
 	
 	<script>
-		
-		// functions 
-
-		// Funcion Declaration 
-		
-		function greet(){
-			// function body
-			console.log('Hello!');
-		}	
-		greet();
-
-		// function expression
-
-		// sayBye(); //ReferenceError: Cannot access 'sayBye' before initialization
-		const sayBye = function(){
-			console.log('Bye!');
-		}
-		sayBye();
-
-
-		//// ***** function arguments/parameters
-
-		// let a = 10, b = 20;
-		// function sum(){
-		// 	console.log(a+b);
-		// }
-		// sum(); // 30
-		// a = 23;
-		// b = 34;
-		// sum(); // 57
-
-
-		function sum(a , b){
-			console.log(a+b);
-		}
-		sum(20,10);
-		sum(34,12);
-		sum(); // undefined + undefined = NaN
-		sum(22,43,55);
-
-
-		// pseudo array arguments
-
-		function superSum(){
-			let sum = 0;
-			for(let i = 0; i < arguments.length; i++){
-				sum += arguments[i];
-			}
-			console.log(`sum of ${[].join.apply(arguments)} = ${sum}`);
-		}
-
-		superSum();
-		superSum(2,3);
-		superSum(2,3,4,5);
-
-		// camel case - eachNewWordFromBigLetter
-
-
-		function smartGreeting(){
-			switch (arguments.length) {
-				case 0: console.log('Hello, Stranger!');
-						break;
-				case 1: console.log(`Hello, ${arguments[0]}! `); // if 1 argument - it is name
-						break;
-				case 2: console.log(`${arguments[0]}, ${arguments[1]}! `); // if 2 arguments - name + greeting
-						break;
-				case 3: console.log(`${arguments[0]}, ${arguments[1]}. ${arguments[2]}`); // if 3 - greet + name + message
-						break;
-				default: console.log('Too much arguments');
-			}	
-		}
-
-		smartGreeting();
-		smartGreeting('John Smith');
-		smartGreeting('Howdy', 'Jane');
-		smartGreeting('Good evening', 'Boss', 'How you doin`g');
-		smartGreeting('Good evening', 'Boss', 'How you doin`g', 'sdjdsfkjdhf');
-
-
-		// default parameters
-
-		const sayHi = function(name = 'Stranger'){
-			console.warn(`Hello, ${name}`);
-		}
-
-		sayHi('Zoe');
-		sayHi();
-
-
-		// returning value
-
-		function mul(a,b){
-			return a*b;
-			console.log(a*b); // will not work after return
-		}
-
-		console.log(mul(2,3));
-		const c = mul(4,5);
-		console.log(c);
-
-
-
-		// arrow functions
-
-		const foo = () => console.log('I am arrow function!');
-		foo();
-
-		const div = (a,b) => a/b;
-		console.log(div(6,2));
-
-
-		const sayHello = name => console.log(`Hello, ${name}!`);
-		sayHello('Jane');
-
-
-		const writeManyLines = (num) => {
-			for(let i = 0; i < num; i++){
-				console.log(`This is line # ${i}`);
-			}
-		}
-
-		writeManyLines(5);
-
-		const countSmth = (a,b,c) => {
-			let d = a+b;
-			let f = (d/c) + b;
-			return f;
-		}
-
-		console.log(countSmth(4,5,6));
-
-
-		// anonymous self-calling
-
-		(function(){
-			console.log('I am anonymous');
-		})();
-
-
-		setTimeout(function(){
-			console.log('Hello from timeout');
-		}, 1000);
-
-
-		// callback functions
-
-		function confirmDeletion(proceed, decline){
-			confirm('Are you sure you want to delete item?') ? proceed() : decline();
-		}
-
-		function removeFromCart(){
-			console.warn('Item was deleted from cart!');
-		}
-
-		function leaveInCart(){
-			console.log('Item was not removed from cart');
-		}
-
-		confirmDeletion(removeFromCart, leaveInCart);
-
-
-		// recursive function
-
-		function callSomeTimes(n, curr = 0){		
-			if(curr < n){
-				curr++;
-				console.log(`Recursive function was called ${curr} time(s)`);
-				callSomeTimes(n, curr);
-			}
-			else{
-				console.log('Exit from recursive function');
-			}
-		}
-	
-		callSomeTimes(5);
-
-
-		// practice 
-
-		let arr = [1,2,3, [4,5, [6,7,8, [9,10,[11, [12,13, [14,15]]]]]]];
-
-		function sumArr(array){
-			let sum = 0;
-			for(let i = 0; i < array.length; i++){
-				if(typeof array[i] === 'number'){
-					sum += array[i];
-				}
-				else {
-					sum += sumArr(array[i]);
-				}
-			}
-			return sum;
-		}
-
-		console.log(sumArr(arr));
-
-
-		// в книге н страниц, пронумерованных от 1 до н, сумма чисел в номерах страниц составляет 1095. // 12 = 1+2 =3 22 = 2+2 = 4
-		// сколько страниц в книге?
-
-		let n = 1;
-		let pagesSum = 0;
-
-		while(pagesSum < 1095){
-			let page = ''+n;
-			for(let i = 0; i < page.length;i++){
-				pagesSum += +page[i];
-			}
-			n++;
-		}
-
-		console.log(n);
-
-
-		// isEven
-
-		// function isEven(num){
-		// 	if(num % 2 === 0){
-		// 		return true;
-		// 	}
-		// 	else{
-		// 		return false;
-		// 	}
-		// }
-
-		function isEven(num){
-			return num % 2 === 0;
-		}
-
-		console.log(isEven(6));
-		console.log(isEven(23));
-
-
-		// sum of odd numbers
-		let arr2 = [2,5,3,7,5,9,12,44,68,32,2,57];
-
-		function arrSum(a){
-			let sum = 0;
-			for(let i = 0; i < a.length; i++){
-				if(!isEven(a[i])){
-					sum += a[i];
-				}
-			}
-			return sum;
-		}
-
-		console.log(arrSum(arr2));
-		console.log(arrSum([1,2,3,4,5]));
-
-
-		// find some letter in word
-
-		function countLetters(letter, str){
-			let count = 0;
-			for(let i = 0; i < str.length; i++){
-				if(str[i] === letter){
-					count++
-				}
-			}
-			console.log(`there are ${count} ${letter}'s in ${str}`);
-		}
-
-		countLetters('b', 'bubble');
-
-
-		// recursive fibonacci 
-
-		function fibonacci(a,b,n, current = 3){
-			if(current < n){
-				return fibonacci(b, a+b, n, ++current);
-			}
-			else{
-				return a+b;
-			}
-		}
-
-		console.log(fibonacci(1,1,11));
-
-
-		// написать функцию, которая принимает начало и конец диапазона и возвращает сумму чисел в этом диапазоне
-
-		function sumRange(start, end){
-			let sum = 0;
-			if(start > end){
-				let max = start;
-				start = end;
-				end = max;
-			}
-			for(let i = start; i <= end; i++){
-				sum += i;
-			}
-			return sum;
-		}
-
-		console.log(sumRange(2,4));
-		console.log(sumRange(6,4));
 
 
 		// HW: // 0) создать функцию, которая принимает параметром какое-то число и выводит в консоли таблицу умножения на это число
+		function table(num){
+			for(let i = 1; i <=9; i++){
+				console.log(`${i}*${num} = ${i*num}`);
+			}
+			console.log('   ');
+		}
+
+		table(3);
+		table(9);
+
+
 		// 1) с помощью рекурсивной функции по очереди вывести элементы массива [1,2,3,4,5]
+		
+		function printArr(arr, index = 0){
+				if(index < arr.length){
+					console.log(arr[index]);
+					printArr(arr, ++index);
+				}
+		}
+
+		printArr([1,2,3,4,5]);
+		
 		// 2) написать функцию, которая принимает параметром какое-то число (например 1000 или 3000) 
 		// и которое возвращает количество чисел в диапазоне от 1 до этого числа, в которых есть цифра 3 (33 - одно число)
 
+		// function countThrees(num){
+		// 	let counter = 0;
+		// 	for(let i = 1; i <= num; i++){
+		// 		let str = i.toString();
+		// 		for(let j = 0; j < str.length; j++){
+		// 			let hasThree = false;
+		// 			if(str[j] === '3'){
+		// 				hasThree = true;
+		// 			}
+		// 			if(hasThree){
+		// 				counter++;
+		// 			}
+		// 		}
+		// 	}
+		// 	return counter;
+		// }
+
+		// console.log(countThrees(3000));
+
+
+		function checkThree(n){
+			let str = n.toString();
+			let found = false;
+			for(let j = 0; j < str.length; j++){
+				if(str[j] == 3){
+					found = true;
+				}
+			}
+			return found;
+		}
+		function countThrees(num){
+			let counter = 0;
+			for(let i = 1; i <= num; i++){
+				if(checkThree(i)){
+					counter++;
+				}
+			}
+			return counter;
+		}
+
+		console.log(countThrees(100));
 
 	</script>
 
