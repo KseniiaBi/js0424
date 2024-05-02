@@ -9,31 +9,42 @@
 </head>
 <body>
     <script>
-        /*По древней легенде мудрец, придумавший шахматы потребовал у персидского шаха такое вознаграждение:
-    Пусть на шахматную доску кладут зёрна: на 1-ую 1 зерно, на 2-ую - 2 зерна, на 3-ую - 4 зерна, на 4-ую - 8 зёрен. (т.е. на каждую следующую клетку доски кладётся в 2 раза больше зёрен чем на предыдущую).
-    //1 Сколько всего зерен?
-    //2 Сколько всего долларов получит мудрец, если 1кг зёрен стоит 2$, при условии веса 1зерна 0.0186грамм?*/
+        /* 0) создать функцию, которая принимает параметром какое-то число и выводит в консоли таблицу умножения на это число
+           1) с помощью рекурсивной функции по очереди вывести элементы массива [1,2,3,4,5]
+           2) написать функцию, которая принимает параметром какое-то число (например 1000 или 3000)  и которое возвращает количество чисел в диапазоне от 1 до этого числа, в которых есть цифра 3 (33 - одно число)
+    */
+        //0
+        function multiplicationTable(number) {
+            for (let i = 1; i <= 10; i++) {
+                console.log(`${number} * ${i} = ${number * i}`);
+            }
+        }
+        multiplicationTable(10);
 
         //1
-        let corn = 2;
-        let sumOfCorns = 0;
-        for (let degree = 0; degree<=63; degree++) {
-            let result = Math.pow(corn, degree);
-            sumOfCorns +=result;
+        function printArrayElementsRecursively(arr, index) {
+            if (index >= arr.length) {
+                return;
+            }
+            console.log(arr[index]);
+            printArrayElementsRecursively(arr, index + 1);
         }
-        console.log("Общее количество зёрен на шахматной доске:", sumOfCorns);
+        const arr = [1, 2, 3, 4, 5];
+        printArrayElementsRecursively(arr, 0);
 
         //2
-        let weightOfOneCorn = 0.0186;
-        weightOfOneCorn /=1000; //переводим значение из грамм в килограммы
-        /*
-          1                    -->  0.0000186 кг
-          18446744073709552000  -->  x кг
-         */
-        let  weightOfAllCorns = sumOfCorns * weightOfOneCorn; //узнаем вес всех зерен
-        const price = 2;
-        const priceOfAllCorns = weightOfAllCorns * price;
-        console.log(`Цена всех зерен: ${priceOfAllCorns} $ .`);
+        function countNumbersWithDigitThree(n) {
+            let count = 0;
+            for (let i = 1; i <= n; i++) {
+                let numStr = i.toString();
+                if (numStr.includes('3')) {
+                    count++;
+                }
+            }
+            return count;
+        }
+        console.log(countNumbersWithDigitThree(1000));
+
     </script>
 </body>
 
