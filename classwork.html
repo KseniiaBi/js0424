@@ -9,374 +9,68 @@
 	
 	
 	<script>
-		// hoisting of function declaration and var
-		// functions 
-
-		// console.log(a); // ReferenceError: Cannot access 'a' before initialization
-		let a = 10;
-
-		console.log(b); // undefined 
-		var b = 12;
-
-		let c = 3;
-
-		if(5){
-			let c = 6;
-			console.log(c);
-		}
-
-		console.log(c);
-
-		// {} - if / while / for/ swich case/ do while
-
-		{
-			let c = 22;
-			console.log(c);
-		}
-
-		let name = 'Jane';
-
-		function sayHi(){
-			// let name = 'John';
-			console.log(name);
-		}
-
-		sayHi();
-
-
-		// closures 
-
-		function greet(){
-			let msg = `Hello, ${name}`;
-			console.log(msg);
-		}
-
-		greet();
-
-		name = 'Peter';
-
-		greet();
-
-
-		function counter(){
-			let count = 0;
-
-			return function(){
-				console.log(count++);
-			}
-		}
-
-		let c1 = counter();
-		c1();
-		c1();
-		c1();
-
-		let c2 = counter();
-		c2();
-		c2();
-		c2();
-
-
-		// 
-		const colors = ['red', 'green', 'blue', 'white', 'black'];
-
-		function makeColors(){
-			let index = 0;
-			return function(){
-				console.log(colors[index]);
-				index = index < colors.length-1 ? ++index : 0;
-			}
-		}
-
-		let color = makeColors();
-		color();
-		color();
-		color();
-		color();
-		color();
-		color();
-		color();
-
-
-		//  98754321 -> 39 -> 12 -> 3
-
-		function getDigitsSum(num){
-			let sum = 0;
-			let str = ''+num;
-			for(let i = 0; i < str.length; i++){
-				sum += +str[i];
-			}
-
-			if(sum > 9){
-				getDigitsSum(sum);
-			}
-			else {
-				console.log(sum);
-			}
-		}
-
-		getDigitsSum(9772839);
-
-
-		// factorial recursively !5 = 1*2*3*4*5
-
-		function factorial(n){
-			if(n > 1){
-				return n*factorial(n-1);
-			}
-			else{
-				return n;
-			}
-		}
-
-		console.log(factorial(5));
-
-
-		// (2)(3) => 5
-
-		function sum(a){
-			return function(b){
-				return a+b;
-			}
-		}
-		console.log(sum(2)(3)); // 5
-
-		// (2)(3)(4) // 9 ... (2)(3)(4)(5) // 14
-
-		function sumAny(a){
-			return function(b){
-				if(b != undefined){
-					return (sumAny(a+b));
-				}
-				else{
-					return a;
-				}
-			}
-		}
-
-		console.log(sumAny(2)(3)(4)());
-		console.log(sumAny(2)(3)(4)(5)());
-
-
-		// используя только операцию сложения написать функции для умножения, 
-		// вычитания и деления двух целых положительных чисел
-
-		function mul(a,b){
-			let result = 0;
-			for(let i = 0; i < b; i++){
-				result += a;
-			}
-			console.log(result);
-		}
-		mul(2,3);
-
-		function extract(a,b){
-			let result = a;
-			for(let i = 0; i < b; i++){
-				result += -1;
-			}
-			console.log(result);
-		}
-		extract(10,4);
-
-
-		// function divide(a,b){
-		// 	let result = 0;
-		// 	let c = 0;
-		// 	while(result < a){
-		// 		result += b;
-		// 		c++;
-		// 	}
-		// 	console.log(c);
-		// }
-
-		function divide(a,b){
-			let result = 0;
-			for(let i = 0; i < a; i+=b){
-				result++;
-			}
-			console.log(result);
-		}
-
-		divide(20,2);
-
-
-		// [7,4,3,8,1,9,5,2,8,3,6] -> [3...7]
-
-		function checkNum(num){
-			return num >= 3 && num <= 7;
-		}
-
-		function filterArray(arr){
-			let a = [];
-			let index = 0;
-			for(let i = 0; i < arr.length; i++){
-				if(checkNum(arr[i])){
-					a[index] = arr[i];
-					index++;
-				}
-			}
-			console.log(a);
-		}
-		filterArray([7,4,3,8,1,9,5,2,8,3,6]);
-
-
-		// min in array
-
-		function minInArr(arr){
-			let min = arr[0];
-			for(let i = 1; i < arr.length; i++){
-				if(arr[i] < min){
-					min = arr[i];
-				}
-			}
-			console.log(min);
-		}
-
-		minInArr([7,4,3,8,1,9,5,2,8,3,6]);
-
-
-		// objects 
-
-		let o = {
-			a: 1,
-			b: 2
-		}
-
-		// objects are mutable
-
-		o.a = 3;
-		o.c = 5;
-
-		delete o.a;
-
-		console.log(o['a']);
-
-		o['d'] = [1,2,3,4,5];
-
-		o.e = {
-			name: 'Kate'
-		}
-
-		o.f = undefined;
-
-		console.log('a' in o);
-
-		for(let prop in o){
-			if(typeof o[prop] == 'object' && o[prop].length == undefined){
-				console.log(`${prop}:`);
-				for(let key in o[prop]){
-					console.log(`	${key}: ${o[prop][key]}`);
-				}
-			}
-			else{
-				console.log(`${prop}: ${o[prop]}`);
-			}
-		}
-
-
-		let user = {
-			name: 'Ann',
-			age: 22,
-			ip: '162.168.0.1'
-		}
-
-		for(let key in user){
-			console.warn(`${key}: ${user[key]}`);
-		}
-
-
-		////// for of - loop for all objects iterable
-
-		let arr = [1,2,3,4,5];
-
-		for(let num of arr){
-			console.log(num);	
-		}
-
-		let str = 'Hello World';
-		for(let letter of str){
-			console.log(letter);
-		}
-
-
-		// function extract values from one prop
-		let users = [
-			{
-				name: 'Fred',
-				age: 33
-			},
-			{
-				name: 'Mary',
-				age: 21
-			}
-		];
-
-		function pluck(propName){
-			const res = [];
-			index = 0;
-			for(let obj of users){
-				for(let prop in obj){
-					if(prop === propName){
-						res[index] = obj[prop];
-						index++;
-					}
-				}
-			}
-			console.log(res);
-		}
-
-
-		pluck('name');
-		pluck('age');
-
-
-		let admin = {
-			name: 'Admin',
-			administrate: function(){
-				console.log('Admin is administrating');
-			},
-			greet(){
-				console.log('Hi from Admin');
-			}
-		}
-
-		admin.administrate();
-		admin.greet();
-
-
-		let calc = {
-			sum(a,b){
-				return a+b;
-			},
-			mul(a,b){
-				return a*b;
-			},
-			div(a,b){
-				return a/b;
-			},
-			extr(a,b){
-				return a-b;
-			}
-		}
-
-		console.log(calc.mul(5,6));
-		console.log(calc.sum(3,12));
-		console.log(calc.div(144,12));
-		console.log(calc.extr(33,10));
-
-
 
 
 		// HW 1) используя функцию getDigitsSum найти все года до 2024 включительно, сумма цифр которых равна 13
-			// 2) написать функцию, которая принимает обьект и возвращает количество свойств внутри него 
+			
+		function getDigitsSum(num){
+			let str = ''+num;
+			let total = 0;
+			for(let char of str){
+				total += +char;
+			}
+			if(total === 13){
+				return total;
+			}
+			if(total > 9){
+				return getDigitsSum(total);
+			}
+			else {
+				return total;
+			}
+		}
+
+		console.log(getDigitsSum(98765421));
+
+		function findYears(){
+			for(let i = 1; i <= 2024; i++){
+				if(getDigitsSum(i) === 13){
+					console.log(i);
+				}	
+			}
+		}
+
+		findYears();
+		
+		// 2) написать функцию, которая принимает обьект и возвращает количество свойств внутри него 
+
+			function objectLength(obj){
+				let count = 0;
+				for(let prop in obj){
+					count++;
+				}
+				return count;
+			}
+
+			console.log(objectLength({a:1,b:2}));
+			console.log(objectLength({a:1,b:2, c:3}));
+			console.log(objectLength({a:1,b:2, c:3, d:4}));
+
 			// 3) написать функцию, которая принимает параметрами язык (ua/en) и число и из обьекта вида 
 			const days = {
-				en: ['Mon', 'Tue', 'Wed'],
-				ua: [...]
+				en: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+				ua: ['Понеділок', "Вівторок", "Середа", "Четвер", "Пʼятниця", "Субота", "Неділя"]
 			}
+
 			// выводился нужный день недели на выбранном языке
 
+			function printDay(lang){
+				const daynum = +prompt('Type any day number 1-7');
+				console.log(days[lang][daynum-1]);
+			}
+
+			printDay('en');
+			printDay('ua');
 
 
 	</script>
