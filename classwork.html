@@ -9,265 +9,48 @@
 	
 	
 	<script>
-		// Array methods
-		let array = [1,2,3,4,5,6,7,8,9];
-
-		// at()
-		console.log(array.at(3));
-
-		//concat()
-
-		let boys = ['John', 'Peter'];
-		let girls = ['Monica', 'Jane'];
-
-		let children = girls.concat(boys, ['Matthew', 'Zoe']);
-		console.log(children);
-
-
-		// copyWithin  mutates existing array
-		const fruits = ["Banana", "Orange", "Apple", "Mango", "Kiwi"];
-		fruits.copyWithin(1, 4);
-		console.log(fruits);
-
-		// entries   returns Object Iterable
-		const fr = fruits.entries();
-		for(let one of fr){
-			console.log(one);
-		}
-
-		// every() returns true/false
-
-		console.log(fruits.every(item => item.length > 3));
-
-
-		// fill() mutates existing array
-
-		fruits.fill('Pear', 2,4);
-		console.log(fruits);
-
-		//	filter returns new array
-
-		const even = array.filter(num => num%2 === 0);
-		console.log(even);
-
-
-		// find returns value of first ocasion
-		console.log(array.find(num => num%2 === 0));
-
-		// findIndex() returns index of first ocasion
-		console.log(array.findIndex(num => num%2 === 0));
-
-
-		// findLast() returns value of last ocasion
-		console.log(array.findLast(num => num%2 === 0));
-
-
-		// findLastIndex() returns index of last ocasion
-		console.log(array.findLastIndex(num => num%2 === 0));
-
-		// flat  returns new array concatenates current array subarrays
-
-		let m = [1,2,[3,4, [5,[6,7]]]];
-		m = m.flat(Infinity);
-		console.log(m);
-
-
-		// flatMap() returns new array (flat)
-
-		let a = [1,2,3, 4,5];
-		let b = a.flatMap(num => num*2);
-		console.log(b);
-
-		// forEach  calls function only
-
-		a.forEach(item => console.log(item+5));
-
-		// from - returns new array 
-		let arr = Array.from('Hello');
-		console.log(arr);
-
-
-		// includes() true/false
-
-		console.log(a.includes(8));
-
-		// indexOf() returns position or -1
-
-		console.log(a.indexOf(9));
-
-		console.warn([1,2,3,4,2].indexOf(2, 2));
-
-
-		// isArray returns true/false
-
-		console.log(Array.isArray({a:1}));
-		console.log(Array.isArray(fruits));
-
-
-		// join() retuns a string
-
-		let x = new Array(10);
-		console.log(x.join('wat') + 'Batman!');
-		console.log(fruits.join('++++'));
-
-		// keys() returns Iteration Object from keys
-
-		let frrr = fruits.keys();
-		for(let k of frrr){
-			console.log(k);
-		}
-
-		// lastIndexOf() returns index of first ocasion from the end
-
-		console.log([1,2,3,4,2].lastIndexOf(2));
-
-		// of() creates array and returns it
-		let o = {
-			a: 1,
-			b: 2,
-			c: 3
-		}
-
-		let arr1 = Array.of(...Object.keys(o));
-		console.log(arr1);
-
-		// pop removes last element and  returns it
-		console.log(arr1.pop());
-		console.log(arr1);
-
-		// push adds new element to the end of array and returns new arr length
-
-		console.log(arr1.push('c','d','e'));
-		console.log(arr1);
-
-		// map returns new array 
-		let c = [1,2,3,4,5];
-		let d = c.map(num => num*2);
-		console.log(d);
-
-		// reduce reduceRight
-
-		let sum = array.reduce((total, num)=> total+num);
-		console.log(sum);
-
-		// reverse mutates original array
-
-		arr1.reverse();
-		console.log(arr1);
-
-		// shift removes first element from array and returns it
-
-		console.log(arr1.shift());
-		console.log(arr1);
-
-
-		// unshift adds element to the array beginning and return new length
-		console.log(arr1.unshift('f', 'e'));
-		console.log(arr1);
-
-		// slice() returns new array from start/edd of existing
-
-		const arr2 = arr1.slice(2, 4);
-		console.log(arr2);
-
-		// some returns true/false
-
-		console.log(arr1.some(letter => letter == 'e'));
-
-		// sort changes existing array
-		let arr3 = [3,5,1,7,8,2,9,6,4];
-		arr3.sort((a,b) => b-a);
-		console.log(arr3);
-
-		// splice changes original array
-
-		console.log(arr3.splice(2, 2, 99, 100));
-		console.log(arr3);
-
-		// toReversed returns new array
-
-		const arr4 = arr3.toReversed();
-		console.log(arr4);
-
-		// toSorted returns new array
-
-		let arr5 = [4,8,1].toSorted();
-		console.log(arr5);
-
-		// toSpliced returns new array
-
-		let arr6 = arr.toSpliced(3,2,99,98);
-		console.log(arr6);
-
-		// with
-		let arr7 = arr6.with(-1, 'o');
-		arr7 = arr7.with(-2, 'l');
-
-		console.log(arr7);
-
-
-
-
-		// practice
-
-		// ->[654321]
-		let a1 = [1,2,3];
-
-		// a1.unshift(6,5,4);
-		// a1.splice(0,0,6,5,4);
-		a1 = [6,5,4].concat(a1);
-		console.log(a1);
-
-		// map(fn, array) => returns new arr with result of fn call
-
-		function map(fn, array){
-			let a = [];
-			for(let item of array){
-				a.push(fn(item));
-			}
-			return a;
-		}
-
-		function square(num){
-			return num*num;
-		}
-
-		console.log(map(square, [2,3,4,5,6]));
-
-
-		// создать массив из 99 чисел из диапазона 1-100 и определить какое число этого диапазона не попало в массив
-		
-		// console.log(Math.ceil(Math.random()*100));
-
-		function checkArray(){
-			let arr = [];
-			let arrSum = 0;
-			while(arr.length < 99){
-				let num = Math.ceil(Math.random()*100);
-				if(!arr.includes(num)){
-					arr.push(num);
-					arrSum += num;
-				}
-			}
-			arr.sort();
-			console.log(arr);
-
-			let total = 0;
-			for(let i = 1; i <= 100; i++){
-				total += i;
-			}
-
-			let found = total - arrSum;
-			console.log(found);
-		}
-
-		checkArray();
-
 
 		// HW 1) написать "своими словами" функцию some
+
+		function some(arr, fn){
+			for(let item of arr){
+				if(fn(item) === true){
+					return true;
+				}
+			}
+			return false;
+		}
+
+		console.log(some([4,5,6,7], (num)=>num > 7));
+
+
 		// 2) написать "своими словами" функцию every
+
+		function every(arr, fn){
+			for(let item of arr){
+				if(fn(item) === false){
+					return false;
+				}
+			}
+			return true;
+		}
+
 		// 3) написать "своими словами" функцию push
 
+		function push(arr, el){
+			let index = arr.length;
+			for(let i = 1; i < arguments.length; i++){
+				arr[index] = arguments[i];
+				index++;
+			}
+			return arr.length;
+		}
+
+		let arr = [1,2,3,4,5];
+
+		console.log(push(arr, 6));
+		console.log(push(arr, 7,8,9));
+		console.log(arr);
 
 	</script>
 
