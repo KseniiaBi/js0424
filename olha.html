@@ -9,41 +9,27 @@
 </head>
 <body>
     <script>
-        /* 0) создать функцию, которая принимает параметром какое-то число и выводит в консоли таблицу умножения на это число
-           1) с помощью рекурсивной функции по очереди вывести элементы массива [1,2,3,4,5]
-           2) написать функцию, которая принимает параметром какое-то число (например 1000 или 3000)  и которое возвращает количество чисел в диапазоне от 1 до этого числа, в которых есть цифра 3 (33 - одно число)
-    */
-        //0
-        function multiplicationTable(number) {
-            for (let i = 1; i <= 10; i++) {
-                console.log(`${number} * ${i} = ${number * i}`);
-            }
-        }
-        multiplicationTable(10);
 
-        //1
-        function printArrayElementsRecursively(arr, index) {
-            if (index >= arr.length) {
-                return;
-            }
-            console.log(arr[index]);
-            printArrayElementsRecursively(arr, index + 1);
-        }
-        const arr = [1, 2, 3, 4, 5];
-        printArrayElementsRecursively(arr, 0);
+       /*HW 1) Напишите функцию words(), которая в зависимости от переданного
+       числового значения будет выводить слово ТОВАР с правильным окончанием */
+       function words(count) {
+           let word;
+           if (count % 10 === 1 && count % 100 !== 11) {
+               word = 'товар';
+           } else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) {
+               word = 'товара';
+           } else {
+               word = 'товаров';
+           }
+           return count + ' ' + word;
+       }
 
-        //2
-        function countNumbersWithDigitThree(n) {
-            let count = 0;
-            for (let i = 1; i <= n; i++) {
-                let numStr = i.toString();
-                if (numStr.includes('3')) {
-                    count++;
-                }
-            }
-            return count;
-        }
-        console.log(countNumbersWithDigitThree(1000));
+       console.log(words(0));
+       console.log(words(1));
+       console.log(words(2));
+       console.log(words(5));
+       console.log(words(11));
+       console.log(words(21));
 
     </script>
 </body>
