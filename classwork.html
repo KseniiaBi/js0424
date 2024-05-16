@@ -10,295 +10,35 @@
 	
 	<script>
 
-		// Objects 
+		// HW 1) Напишите функцию words(), которая в зависимости от переданного числового значения будет выводить слово ТОВАР с правильным окончанием
 
-		// this
-
-		let user = {
-			name: 'Mary',
-			sayHi(){
-				console.log(`Hi! My name is ${user.name}`);
+		function words(count){
+			let word = 'товар';
+			let c = count%100;
+			if(c % 10 >= 5 && c <=10 || c >= 5 && c <= 20 || c % 10 === 0){
+				word += 'ов';
 			}
-		}
-
-		user.sayHi();
-
-		let student = user;
-
-		student.sayHi();
-		student.name = 'Masha';
-		student.sayHi();
-
-		user.sayHi();
-
-		user = null;
-
-		// student.sayHi(); // Cannot read properties of null 
-
-		student.sayHi = function(){
-				console.log(`Hi! My name is ${this.name}`);
-		}
-		student.sayHi();
-
-		let admin = student;
-
-		admin.sayHi();
-
-		student = null;
-		admin.sayHi();
-
-
-		admin = null; // after this object {name:...,sayHi:...} will be deleted with garbage collector
-
-
-		// lost context
-
-		student = {
-			username: 'Jane',
-			name: 'J',
-			age: 20,
-			greet(){
-				console.log(`Hi from ${this.username}`);
-			}
-		}
-		student.greet();
-		setTimeout(student.greet, 1000); // Hi from undefined
-		setTimeout(()=>student.greet(), 1500); // fixed with closure
-
-
-		// call() apply - redirection of function call
-
-		// call(context, arg1, arg2, ... , argN)
-
-		function foo(){
-			console.log(`I was called from ${this.name}`);
-		}
-
-		foo(); // from window.name
-
-		foo.call(student);
-		admin = {
-			name: 'admin'
-		}
-
-		foo.call(admin);
-
-
-		function say(phrase){
-			console.log(`${phrase} from ${this.name}`);
-		}
-
-		say.call(student, 'Good evening');
-		say.call(admin, 'Ciao');
-
-
-		// apply(context, [arg1, arg2, ... , argN])
-
-		let arr = [3,6,9,6,12];
-		console.log(Math.min.apply(null, arr));
-
-
-		// bind() - binding context
-
-		let studentHi = student.greet.bind(student);
-
-		setTimeout(studentHi, 2000);
-
-
-		// descriptors
-
-		console.log(Object.getOwnPropertyDescriptors(student));
-		console.log(Object.getOwnPropertyDescriptor(admin, 'name'));
-
-		// writable - can set new value
-		// enumerable - is visible in for ...in loop
-		// configurable - can configurate with Object.defineProperty(obj,{val, enum, conf, wri})
-
-		Object.defineProperty(admin, 'role', {
-			value: 'site owner',
-			enumerable: false,
-			writable: false,
-			configurable: true
-		});
-
-		for(let prop in admin){
-			console.log(prop);
-		}
-
-		admin.role = 'user'; // will have no effect because of writable: false
-
-
-		Object.preventExtensions(admin); // no new properties can be added
-
-		admin.age = 66; // no effect
-
-		Object.seal(student); // can not add/delete props, configurable:false, writable:false for all props
-		student.name = 'K'; // works but
-		delete student.name; // will not work
-
-		Object.freeze(user); // can not add/delete/edit props, configurable:false, writable:false for all props
-
-		console.log(Object.isSealed(student));
-		console.log(Object.isFrozen(user));
-		console.log(Object.isExtensible(admin));
-
-
-		// getter/setter
-
-		let obj = {
-			name: 'Peter',
-			lastname: 'Doe',
-			get fullName(){
-				return `${this.name} ${this.lastname}`;
-			}
-		}
-
-		console.warn(obj.fullName);
-
-		obj.fullName = 'No Name'; // no result
-
-		Object.defineProperty(obj, 'fullName', {
-			set(newname) {
-				this.name = newname.split(' ')[0];
-				this.lastname = newname.split(' ')[1];
-			}
-		});
-
-		obj.fullName = 'No Name'; // was set
-		console.warn(obj.fullName);
-
-
-		let o = {
-			_name: 'John',
-			get name(){
-				return this._name;
-			},
-			set name(newname){
-				if(typeof newname != 'string'){
-					console.error('Wrong Name type was used!');
-				}
-				if(newname.length < 3){
-					console.error('Too short name');
-				}
-				else{
-					this._name = newname;
-				}
-			}
-		}
-
-		console.log(o._name); // can access, but don't do that!!!
-		console.log(o.name); // correct access
-		o.name = 123;
-		o.name = 'ee';
-		o.name = '2emnklsd';
-		console.log(o.name);
-
-
-		// practice
-
-		// создать обьект, у которого будет два свойства - имя и возраст и два метода. При этом чтобы методы 
-		// не участвовале в переборе циклом for in и их нельзя было перезаписать. А для каждого из этих свойств были геттер и сеттер
-
-
-		let developer = {
-			_name: 'Jerry',
-			_age: 33,
-			develop(){
-				console.log('Development in progress');
-			},
-			sleep(){
-				console.log(`Developer ${this._name} is sleeping`);
-			}
-		}
-
-		Object.defineProperties(developer, {
-			name: {
-				enumerable: true,
-				get(){
-					return this._name;
-				},
-				set(newname){
-					this._name = newname;
-				}
-			},
-			age: {
-				enumerable: true,
-				get(){
-					return this._age;
-				},
-				set(newage){
-					this._name = newage;
-				}
-			},
-			_age:{
-				enumerable: false,
-			},
-			_name:{
-				enumerable: false,
-			},
-			develop: {
-				writable: false,
-				enumerable: false
-			},
-			sleep: {
-				writable: false,
-				enumerable: false
-			}
-		});
-
-		for(let prop in developer){
-			console.log(`${prop}: ${developer[prop]}`);
-		}
-
-
-		// fn o1 === o2
-
-		function objLength(o){
-			let count = 0;
-			for(let prop in o){
-				count++;
-			}	
-			return count;
-		}
-
-		function objectsAreEqual(o1,o2){
-			if(typeof o1 !== 'object' || typeof o2 !== 'object' || Array.isArray(o1) ||  Array.isArray(o2)){
-				return false;
-			}
-			if(objLength(o1) !== objLength(o2)){
-				return false;
-			}
-			for(let prop in o1){
-				if(!prop in o2 || o2[prop] !== o1[prop]){
-					return false;
-				}
-			}
-			return true;
-		}
-
-		console.log(objectsAreEqual({a:1}, {b:1}));
-
-
-		// bubble to {u:1, b: 3, l: 1, e: 1}
-
-		function strToObj(str){
-			let obj = {};
-			str = str.toLowerCase().split(' ').join('');
-
-			for(let letter of str){
-				if(letter in obj){
-					obj[letter] += 1;
-				}
-				else{
-					obj[letter] = 1;
-				}
+			else if(c % 10 >= 2 && c % 10 < 5 && (c < 10 || c > 20)){
+				word += 'а';
 			}
 
-			return obj;
+			console.log(`В корзине ${count} ${word}`);
 		}
 
-		console.log(strToObj('bubble'));
-		console.log(strToObj('Hello World'));
+		words(0);
+		words(1);
+		words(2);
+		words(3);
+		words(6);
+		words(12);
+		words(20);
+		words(21);
+		words(22);
+		words(53);
+		words(153);
+		words(112);
+		words(102);
+		words(1002);
 
 	</script>
 
