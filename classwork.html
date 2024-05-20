@@ -10,35 +10,375 @@
 	
 	<script>
 
-		// HW 1) Напишите функцию words(), которая в зависимости от переданного числового значения будет выводить слово ТОВАР с правильным окончанием
+		
+		// OOP
+		// Classes 
 
-		function words(count){
-			let word = 'товар';
-			let c = count%100;
-			if(c % 10 >= 5 && c <=10 || c >= 5 && c <= 20 || c % 10 === 0){
-				word += 'ов';
-			}
-			else if(c % 10 >= 2 && c % 10 < 5 && (c < 10 || c > 20)){
-				word += 'а';
+		// class declaration
+
+		class Animal{
+			_passport = 'RR00098890';
+			get passport(){
+				return this._passport;
 			}
 
-			console.log(`В корзине ${count} ${word}`);
+			constructor(name){
+				this.name = name;
+			}
+			talk(){
+				console.log(`Hello! My name is ${this.name}`);
+			}
+			walk(){
+				console.log(`${this.name} is walking`);
+			}
 		}
 
-		words(0);
-		words(1);
-		words(2);
-		words(3);
-		words(6);
-		words(12);
-		words(20);
-		words(21);
-		words(22);
-		words(53);
-		words(153);
-		words(112);
-		words(102);
-		words(1002);
+		let rabbit = new Animal('Roger');
+		rabbit.talk();
+		rabbit.walk();
+		console.log(rabbit.passport);
+
+		// typeof Animal // function
+
+		Animal.prototype.sleep = function(){
+			console.log(`${this.name} is sleeping`);
+		}
+		rabbit.sleep();
+
+
+		// class Expression 
+
+		const User = class {
+			name = 'Admin';
+			constructor(ip, browser){
+				this.ip = ip;
+				this.browser = browser;
+			}
+			['say'+'Hi'](){
+				console.log('Hi!');
+			}
+
+			checkUser(){
+				console.log(`User visited website from ${this.ip} via ${this.browser} browser`);
+			}
+		} 
+
+		const me = new User('192.168.0.0', window.navigator.userAgent);
+
+		me.checkUser();
+		me.sayHi();
+		console.log(me.name);
+
+
+		// inheritance
+
+		class Dog extends Animal {
+			constructor(name, breed){
+				super(name);
+				breed = this.breed;
+			}
+			bark(){
+				console.warn('Woof!');
+			}
+			talk(){
+				super.talk();
+				this.bark();
+			}
+		}
+
+		let tuzik = new Dog('Tuzik');
+		tuzik.bark();
+		tuzik.sleep();
+		tuzik.talk();
+
+
+
+		// static methods and props
+
+		class Book{
+			static bookCount = 0;
+
+			static booksSort(book1, book2){
+				if(book1.name > book2.name){
+					return 1
+				}
+				else if(book1.name < book2.name){
+					return -1
+				}
+				else{
+					return 0;
+				}
+			}
+
+			constructor(name, author){
+				this.name = name;
+				this.author = author;
+
+				Book.bookCount++;
+			}
+		}
+		console.log(Book.bookCount);
+		let js = new Book('Eloquent Javascript', 'M. Haverbeck');
+		console.log(Book.bookCount);
+		let css = new Book('Идеальные решения ежедневных задач', 'Леа Веру');
+		console.log(Book.bookCount);
+		let cSharp = new Book('Basic C#', 'Shildt');
+
+		let books = [js,cSharp, css];
+
+		books = books.sort(Book.booksSort);
+		console.log(books);
+
+
+		// private and protected props and methods
+
+		class CoffeeMachine{
+			#waterTemp = 20;
+			#waterLimit = 1000;
+			#interval;
+			enabled = false;
+			_waterAmount = 0;
+
+			constructor(model, manufacturer, power){
+				this.model = model;
+				this.manufacturer = manufacturer;
+				this.power = power;
+				this.ready = false;
+			}
+
+			enable(){
+				this.#interval = setInterval(()=>{
+					if(this.#waterTemp < 100){
+						this.#waterTemp += 10;
+					}
+					else{
+						clearInterval(this.#interval);
+						this.ready = true;
+						console.log(`Coffeemachine ${this.model} is ready!`);
+					}
+				},200);
+			}
+
+			#getWaterlimit(){
+				return this.#waterLimit;
+			}
+
+			set waterAmount(amount){
+				if(amount + this._waterAmount > this.#getWaterlimit()){
+					console.error('Too much water');
+				}
+				else if(amount < 0 || typeof amount !== 'number'){
+					console.error('Incorrect water input');
+				}
+				else{
+					this._waterAmount += amount;
+				}
+			}
+
+			get waterAmount(){
+				return `Current water amount is ${this._waterAmount}ml`;
+			}
+
+			brew(drink){
+				if(!this.ready){
+					console.error(`${this.manufacturer} isn't ready`);
+					return;
+				}
+				if(this._waterAmount > drink.ml){
+					console.log(`${drink.name} is in progress!`);
+					setTimeout(()=>{
+						this._waterAmount -= drink.ml;
+						console.log(`${drink.name} is ready!`);
+					},drink.time*100);
+				}
+				else{
+					console.error('Not enough water');
+				}
+			}
+		}
+
+
+		let g = new CoffeeMachine('Baby Class D', 'Gaggia', 1200);
+		console.log(g);
+		g.enable();
+		// console.log(g.#waterTemp); //  Private field '#waterTemp' must be declared in an enclosing class
+
+		console.log(g.waterAmount);
+		g.waterAmount = 1200;
+		g.waterAmount = 300;
+		g.brew({name: 'espresso', ml: 30, time: 15});
+
+		setTimeout(() => {
+			g.brew({name: 'americano', ml: 120, time: 25});	
+		}, 3000);
+
+
+
+		// OOP Design Patterns
+
+		// patern types: 
+		// Creational: Constructor, Module, Factory, Singleton, 
+		// Structural: Decorator, Facade
+		// Behavioral: Observer, Mediator, Command
+		
+		
+		const myModule = (function(){
+			const types = ['rabbit', 'cat', 'dog'];
+			const breeds = ['retreiver', 'maltipoo', 'shepherd'];
+
+			const getTypes = () => types;
+			return {
+				readTypes: getTypes
+			}
+		})();
+
+		console.log(myModule.readTypes());
+		console.log(myModule.breeds);
+
+
+		// Singleton 
+
+		class State{
+			static currentState = null;
+			constructor(type){
+				this.type = type;
+
+				if(State.currentState === null){
+					State.currentState = this;
+				}
+				else {
+					return State.currentState;
+				}
+			}
+		}
+		const menu = new State('Main Menu');
+		const level = new State('Level1');
+		console.log(level);
+
+
+		// Factory 
+
+		class Cat{
+			constructor(options){
+				this.name = options.name;
+				this.sound = options.sound;
+			}
+		}
+
+		class Hamster{
+			constructor(options){
+				this.name = options.name;
+				this.sound = options.sound;
+			}
+		}
+
+		class Parrot{
+			constructor(options){
+				this.name = options.name;
+				this.sound = options.sound;
+			}
+		}
+
+		class PetShop{
+			sellPet(options){
+				switch(options.type){
+					case 'cat': this.animalType = Cat;
+								break;
+					case 'hamster': this.animalType = Hamster;
+									break;
+					case 'parrot': this.animalType = Parrot;
+									break;  
+					default: this.animalType = Parrot;
+									break;  
+				}
+				return new this.animalType(options);
+			}
+		}
+
+		let ps1 = new PetShop();
+		const dog = ps1.sellPet({type: 'dog', name: 'tuzik', sound: 'woof'});
+		const cat = ps1.sellPet({type: 'cat', name: 'murzik', sound: 'meow'});
+
+
+		// Facade 
+
+		const $ = function(target){
+			return new element(target);
+		}
+
+		function element(element){
+			// find in DOM
+			this.target = element;
+			return this;
+		}
+
+		element.prototype.html = function(html)  {
+			// set inner HTML to target
+			this.html = html;
+			return this;
+		}
+
+		const header = $('.header');
+		header.html('new html');
+		
+
+
+		// (...)
+
+
+		function sum(){
+			let sum = 0;
+			for(let num of arguments){
+				sum += num;
+			}
+			return sum;
+		}
+
+		console.log(sum(1,2,3,4,5,6));
+		const arr = [1,2,3,4,5,6];
+		console.log(sum(arr)); // 01,2,3,4,5,6
+		console.log(sum.apply(null, arr)); // 21
+		console.log(sum(...arr)); // 21 
+
+		
+
+		let student = {
+			firstname: null,
+			lastname: null,
+			age: 33,
+			city: 'LA',
+			hobbys: ['art', 'crossfit', 'cooking'],
+			get fullname(){
+				return `${this.firstname} ${this.lastname}`
+			},
+			set fullname(newname){
+				[this.firstname, this.lastname] = newname.split(' ');
+			}
+		}
+
+		console.log(student.fullname);
+		student.fullname = 'Mary Joe';
+		console.log(student.fullname);
+
+
+		let [name, lastname, age] = ['Ann', 'Doe', 22];
+		console.log(age); // 22
+		console.log(name); // Ann
+
+
+		let [breed, petname, ...petDetails] = ['Korgi', 'Katz', 'Katy', 2, 'Kyiv'];
+
+		const block = {
+			width: 200,
+			height: 50,
+			background: 'black',
+			color: 'white',
+			border: 'gray'
+		}
+
+		let {width, height, ...colors} = block;
+
+		let {firstname: n, age: a, ...rest } = student;
 
 	</script>
 
