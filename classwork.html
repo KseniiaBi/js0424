@@ -153,94 +153,72 @@
 	</div>
 
 
-	<div id="box">box</div>
-	<div class="block">block</div>
-	<button onclick="alert(333)">Click me!</button> <!-- DON'T DO SO!!!! -->
-	<section>section 1</section>
-	<section>section 2</section>
-	
 	
 	<script>
-		
-		// DOM BOM Acessing Elements
 
-		const box = document.getElementById('box');
-		const block = document.getElementsByClassName('block')[0]; // HTMLCollection
-		const btn = document.getElementsByTagName('button')[0]; // HTMLCollection
-		const sections = document.querySelectorAll('section'); // NodeList
-		const section = document.querySelector('section'); // searches first match of selector and stops
+		// OOP slider 
 
+		class Slider{
+			constructor(parent, time = 1500){
+				this.parent = parent;
+				this.slides = parent.getElementsByClassName('slide');
+				this.navs = parent.querySelectorAll('.dot');
+				this.arrPrev = parent.querySelector('.prev');
+				this.arrNext = parent.querySelector('.next');
+				this.currentSlide = 0;
+				this.interval;
+				this.time = time;
 
-		// Event
+				this.init();
+				
+				this.arrPrev.onclick = () => {
+					this.currentSlide = this.currentSlide > 0 ? --this.currentSlide : this.slides.length - 1;
+					this.changeSlide();
+				}
 
-		box.onclick = (event) => console.log(event);
+				this.arrNext.onclick = () => {
+					this.currentSlide = this.currentSlide < this.slides.length - 1 ? ++this.currentSlide : 0;
+					this.changeSlide();
+				}
 
-		function foo(){
-			alert(111);
-		}
-
-		block.onclick = foo;
-		block.onclick = () => console.log(222);
-
-
-		document.addEventListener('click', (e)=>{
-			if(e.target.tagName.toLowerCase() === 'section'){
-				e.target.style.background = 'pink';
+				for(let dot of this.navs){
+					dot.onclick = () => {
+						this.currentSlide = +dot.dataset.slide;
+						this.changeSlide();
+					}
+				}
 			}
-		});
 
-		console.log(window.getComputedStyle(btn).margin);
-
-
-		// slider
-		
-		const slides = document.getElementsByClassName('slide');
-		const navs = document.querySelectorAll('.dot');
-		const arrPrev = document.querySelector('.prev');
-		const arrNext = document.querySelector('.next');
-		let currentSlide = 0;
-		let interval;
-
-		function changeSlide(){
-			clearInterval(interval);
-			for(let i = 0; i < slides.length; i++){
-				slides[i].classList.remove('active');
-				navs[i].classList.remove('active');
+			changeSlide(){
+				clearInterval(this.interval);
+				for(let i = 0; i < this.slides.length; i++){
+					this.slides[i].classList.remove('active');
+					this.navs[i].classList.remove('active');
+				}
+				this.slides[this.currentSlide].classList.add('active');
+				this.navs[this.currentSlide].classList.add('active');
+				this.init();
 			}
-			slides[currentSlide].classList.add('active');
-			navs[currentSlide].classList.add('active');
-			init();
-		}
 
-		// autoplay
-		function init(){
-			interval = setInterval(()=>{	
-				currentSlide = currentSlide < slides.length - 1 ? ++currentSlide : 0;
-				changeSlide();
-			}, 1500);
+			init(){
+				this.interval = setInterval(()=>{	
+					this.currentSlide = this.currentSlide < this.slides.length - 1 ? ++this.currentSlide : 0;
+					this.changeSlide();
+				}, this.time);
+			}
 		}
-		init();
-
-		// arrows
-		arrPrev.onclick = () => {
-			currentSlide = currentSlide > 0 ? --currentSlide : slides.length - 1;
-			changeSlide();
+	
+		const sliders = document.querySelectorAll('.slider');
+		for(let s of sliders){
+			const time = Math.floor(Math.random()*(3000 - 2000) + 2000);
+			new Slider(s,time);
 		}
-
-		arrNext.onclick = () => {
-			currentSlide = currentSlide < slides.length - 1 ? ++currentSlide : 0;
-			changeSlide();
-		}
+		
 
 
 		// dots
 
-		for(let dot of navs){
-			dot.onclick = () => {
-				currentSlide = +dot.dataset.slide;
-				changeSlide();
-			}
-		}
+		
 
 
 	</script>
