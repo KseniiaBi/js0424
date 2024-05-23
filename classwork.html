@@ -4,381 +4,244 @@
 	<title>JS FE</title> 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		.slider{
+			height: 400px;
+			margin-bottom: 0px;
+			position: relative;
+		}
+
+		.slide{
+			position: absolute;
+			left: 0;
+			top: 0;
+			opacity: 0;
+			width: 100%;
+			height: 100%;
+			background-color: gray;
+			color: #fff;
+			text-align: center;
+			font-size: 100px;
+			line-height: 300px;
+			transition: opacity 0.4s linear;
+		}
+
+		.slide:nth-of-type(2){
+			background-color: hotpink;
+		}
+		.slide:nth-of-type(3){
+			background-color: lightblue;
+		}
+		.slide:nth-of-type(4){
+			background-color: lightgreen;
+		}
+		.slide:nth-of-type(5){
+			background-color: gold;
+		}
+
+		.slide.active {
+			opacity: 1;
+		}
+
+		.prev, .next {
+			position: absolute;
+			z-index: 5;
+			top: 120px;
+			left: 0;
+			font-size: 60px;
+			line-height: 1;
+			color: #ffffff;
+			cursor: pointer;
+			transform: scaleX(0.7);
+		}
+		.next {
+			left: auto;
+			right: 0;
+		}
+
+		.slidernavs {
+			position: absolute;
+			z-index: 5;
+			bottom: 18px;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.dot {
+			width: 14px;
+			height: 14px;
+			border-radius: 50%;
+			border: 2px solid #ffffff;
+			cursor: pointer;
+			margin: 0 7px;
+		}
+
+		.dot.active{
+			background-color: #ffffff;
+		}
+
+	</style>
 </head>
 <body>
+
+
+	<div class="slider">
+		<div class="slide active">Slide 1</div>
+		<div class="slide">Slide 2</div>
+		<div class="slide">Slide 3</div>
+		<div class="slide">Slide 4</div>
+		<div class="slide">Slide 5</div>
+
+		<div class="prev">&lt;</div>
+		<div class="next">&gt;</div>
+
+		<div class="slidernavs">
+			<div data-slide="0" class="dot active"></div>
+			<div data-slide="1" class="dot"></div>
+			<div data-slide="2" class="dot"></div>
+			<div data-slide="3" class="dot"></div>
+			<div data-slide="4" class="dot"></div>
+		</div>
+	</div>
+
+
+	<div class="slider">
+		<div class="slide active">Slide 1</div>
+		<div class="slide">Slide 2</div>
+		<div class="slide">Slide 3</div>
+		<div class="slide">Slide 4</div>
+		<div class="slide">Slide 5</div>
+
+		<div class="prev">&lt;</div>
+		<div class="next">&gt;</div>
+
+		<div class="slidernavs">
+			<div data-slide="0" class="dot active"></div>
+			<div data-slide="1" class="dot"></div>
+			<div data-slide="2" class="dot"></div>
+			<div data-slide="3" class="dot"></div>
+			<div data-slide="4" class="dot"></div>
+		</div>
+	</div>
+
+
+	<div class="slider">
+		<div class="slide active">Slide 1</div>
+		<div class="slide">Slide 2</div>
+		<div class="slide">Slide 3</div>
+		<div class="slide">Slide 4</div>
+		<div class="slide">Slide 5</div>
+
+		<div class="prev">&lt;</div>
+		<div class="next">&gt;</div>
+
+		<div class="slidernavs">
+			<div data-slide="0" class="dot active"></div>
+			<div data-slide="1" class="dot"></div>
+			<div data-slide="2" class="dot"></div>
+			<div data-slide="3" class="dot"></div>
+			<div data-slide="4" class="dot"></div>
+		</div>
+	</div>
+
+
+	<div id="box">box</div>
+	<div class="block">block</div>
+	<button onclick="alert(333)">Click me!</button> <!-- DON'T DO SO!!!! -->
+	<section>section 1</section>
+	<section>section 2</section>
 	
 	
 	<script>
-
 		
-		// OOP
-		// Classes 
+		// DOM BOM Acessing Elements
 
-		// class declaration
+		const box = document.getElementById('box');
+		const block = document.getElementsByClassName('block')[0]; // HTMLCollection
+		const btn = document.getElementsByTagName('button')[0]; // HTMLCollection
+		const sections = document.querySelectorAll('section'); // NodeList
+		const section = document.querySelector('section'); // searches first match of selector and stops
 
-		class Animal{
-			_passport = 'RR00098890';
-			get passport(){
-				return this._passport;
-			}
 
-			constructor(name){
-				this.name = name;
-			}
-			talk(){
-				console.log(`Hello! My name is ${this.name}`);
-			}
-			walk(){
-				console.log(`${this.name} is walking`);
-			}
+		// Event
+
+		box.onclick = (event) => console.log(event);
+
+		function foo(){
+			alert(111);
 		}
 
-		let rabbit = new Animal('Roger');
-		rabbit.talk();
-		rabbit.walk();
-		console.log(rabbit.passport);
-
-		// typeof Animal // function
-
-		Animal.prototype.sleep = function(){
-			console.log(`${this.name} is sleeping`);
-		}
-		rabbit.sleep();
+		block.onclick = foo;
+		block.onclick = () => console.log(222);
 
 
-		// class Expression 
-
-		const User = class {
-			name = 'Admin';
-			constructor(ip, browser){
-				this.ip = ip;
-				this.browser = browser;
+		document.addEventListener('click', (e)=>{
+			if(e.target.tagName.toLowerCase() === 'section'){
+				e.target.style.background = 'pink';
 			}
-			['say'+'Hi'](){
-				console.log('Hi!');
-			}
+		});
 
-			checkUser(){
-				console.log(`User visited website from ${this.ip} via ${this.browser} browser`);
-			}
-		} 
-
-		const me = new User('192.168.0.0', window.navigator.userAgent);
-
-		me.checkUser();
-		me.sayHi();
-		console.log(me.name);
+		console.log(window.getComputedStyle(btn).margin);
 
 
-		// inheritance
-
-		class Dog extends Animal {
-			constructor(name, breed){
-				super(name);
-				breed = this.breed;
-			}
-			bark(){
-				console.warn('Woof!');
-			}
-			talk(){
-				super.talk();
-				this.bark();
-			}
-		}
-
-		let tuzik = new Dog('Tuzik');
-		tuzik.bark();
-		tuzik.sleep();
-		tuzik.talk();
-
-
-
-		// static methods and props
-
-		class Book{
-			static bookCount = 0;
-
-			static booksSort(book1, book2){
-				if(book1.name > book2.name){
-					return 1
-				}
-				else if(book1.name < book2.name){
-					return -1
-				}
-				else{
-					return 0;
-				}
-			}
-
-			constructor(name, author){
-				this.name = name;
-				this.author = author;
-
-				Book.bookCount++;
-			}
-		}
-		console.log(Book.bookCount);
-		let js = new Book('Eloquent Javascript', 'M. Haverbeck');
-		console.log(Book.bookCount);
-		let css = new Book('Идеальные решения ежедневных задач', 'Леа Веру');
-		console.log(Book.bookCount);
-		let cSharp = new Book('Basic C#', 'Shildt');
-
-		let books = [js,cSharp, css];
-
-		books = books.sort(Book.booksSort);
-		console.log(books);
-
-
-		// private and protected props and methods
-
-		class CoffeeMachine{
-			#waterTemp = 20;
-			#waterLimit = 1000;
-			#interval;
-			enabled = false;
-			_waterAmount = 0;
-
-			constructor(model, manufacturer, power){
-				this.model = model;
-				this.manufacturer = manufacturer;
-				this.power = power;
-				this.ready = false;
-			}
-
-			enable(){
-				this.#interval = setInterval(()=>{
-					if(this.#waterTemp < 100){
-						this.#waterTemp += 10;
-					}
-					else{
-						clearInterval(this.#interval);
-						this.ready = true;
-						console.log(`Coffeemachine ${this.model} is ready!`);
-					}
-				},200);
-			}
-
-			#getWaterlimit(){
-				return this.#waterLimit;
-			}
-
-			set waterAmount(amount){
-				if(amount + this._waterAmount > this.#getWaterlimit()){
-					console.error('Too much water');
-				}
-				else if(amount < 0 || typeof amount !== 'number'){
-					console.error('Incorrect water input');
-				}
-				else{
-					this._waterAmount += amount;
-				}
-			}
-
-			get waterAmount(){
-				return `Current water amount is ${this._waterAmount}ml`;
-			}
-
-			brew(drink){
-				if(!this.ready){
-					console.error(`${this.manufacturer} isn't ready`);
-					return;
-				}
-				if(this._waterAmount > drink.ml){
-					console.log(`${drink.name} is in progress!`);
-					setTimeout(()=>{
-						this._waterAmount -= drink.ml;
-						console.log(`${drink.name} is ready!`);
-					},drink.time*100);
-				}
-				else{
-					console.error('Not enough water');
-				}
-			}
-		}
-
-
-		let g = new CoffeeMachine('Baby Class D', 'Gaggia', 1200);
-		console.log(g);
-		g.enable();
-		// console.log(g.#waterTemp); //  Private field '#waterTemp' must be declared in an enclosing class
-
-		console.log(g.waterAmount);
-		g.waterAmount = 1200;
-		g.waterAmount = 300;
-		g.brew({name: 'espresso', ml: 30, time: 15});
-
-		setTimeout(() => {
-			g.brew({name: 'americano', ml: 120, time: 25});	
-		}, 3000);
-
-
-
-		// OOP Design Patterns
-
-		// patern types: 
-		// Creational: Constructor, Module, Factory, Singleton, 
-		// Structural: Decorator, Facade
-		// Behavioral: Observer, Mediator, Command
+		// slider
 		
-		
-		const myModule = (function(){
-			const types = ['rabbit', 'cat', 'dog'];
-			const breeds = ['retreiver', 'maltipoo', 'shepherd'];
+		const slides = document.getElementsByClassName('slide');
+		const navs = document.querySelectorAll('.dot');
+		const arrPrev = document.querySelector('.prev');
+		const arrNext = document.querySelector('.next');
+		let currentSlide = 0;
+		let interval;
 
-			const getTypes = () => types;
-			return {
-				readTypes: getTypes
+		function changeSlide(){
+			clearInterval(interval);
+			for(let i = 0; i < slides.length; i++){
+				slides[i].classList.remove('active');
+				navs[i].classList.remove('active');
 			}
-		})();
-
-		console.log(myModule.readTypes());
-		console.log(myModule.breeds);
-
-
-		// Singleton 
-
-		class State{
-			static currentState = null;
-			constructor(type){
-				this.type = type;
-
-				if(State.currentState === null){
-					State.currentState = this;
-				}
-				else {
-					return State.currentState;
-				}
-			}
-		}
-		const menu = new State('Main Menu');
-		const level = new State('Level1');
-		console.log(level);
-
-
-		// Factory 
-
-		class Cat{
-			constructor(options){
-				this.name = options.name;
-				this.sound = options.sound;
-			}
+			slides[currentSlide].classList.add('active');
+			navs[currentSlide].classList.add('active');
+			init();
 		}
 
-		class Hamster{
-			constructor(options){
-				this.name = options.name;
-				this.sound = options.sound;
+		// autoplay
+		function init(){
+			interval = setInterval(()=>{	
+				currentSlide = currentSlide < slides.length - 1 ? ++currentSlide : 0;
+				changeSlide();
+			}, 1500);
+		}
+		init();
+
+		// arrows
+		arrPrev.onclick = () => {
+			currentSlide = currentSlide > 0 ? --currentSlide : slides.length - 1;
+			changeSlide();
+		}
+
+		arrNext.onclick = () => {
+			currentSlide = currentSlide < slides.length - 1 ? ++currentSlide : 0;
+			changeSlide();
+		}
+
+
+		// dots
+
+		for(let dot of navs){
+			dot.onclick = () => {
+				currentSlide = +dot.dataset.slide;
+				changeSlide();
 			}
 		}
 
-		class Parrot{
-			constructor(options){
-				this.name = options.name;
-				this.sound = options.sound;
-			}
-		}
-
-		class PetShop{
-			sellPet(options){
-				switch(options.type){
-					case 'cat': this.animalType = Cat;
-								break;
-					case 'hamster': this.animalType = Hamster;
-									break;
-					case 'parrot': this.animalType = Parrot;
-									break;  
-					default: this.animalType = Parrot;
-									break;  
-				}
-				return new this.animalType(options);
-			}
-		}
-
-		let ps1 = new PetShop();
-		const dog = ps1.sellPet({type: 'dog', name: 'tuzik', sound: 'woof'});
-		const cat = ps1.sellPet({type: 'cat', name: 'murzik', sound: 'meow'});
-
-
-		// Facade 
-
-		const $ = function(target){
-			return new element(target);
-		}
-
-		function element(element){
-			// find in DOM
-			this.target = element;
-			return this;
-		}
-
-		element.prototype.html = function(html)  {
-			// set inner HTML to target
-			this.html = html;
-			return this;
-		}
-
-		const header = $('.header');
-		header.html('new html');
-		
-
-
-		// (...)
-
-
-		function sum(){
-			let sum = 0;
-			for(let num of arguments){
-				sum += num;
-			}
-			return sum;
-		}
-
-		console.log(sum(1,2,3,4,5,6));
-		const arr = [1,2,3,4,5,6];
-		console.log(sum(arr)); // 01,2,3,4,5,6
-		console.log(sum.apply(null, arr)); // 21
-		console.log(sum(...arr)); // 21 
-
-		
-
-		let student = {
-			firstname: null,
-			lastname: null,
-			age: 33,
-			city: 'LA',
-			hobbys: ['art', 'crossfit', 'cooking'],
-			get fullname(){
-				return `${this.firstname} ${this.lastname}`
-			},
-			set fullname(newname){
-				[this.firstname, this.lastname] = newname.split(' ');
-			}
-		}
-
-		console.log(student.fullname);
-		student.fullname = 'Mary Joe';
-		console.log(student.fullname);
-
-
-		let [name, lastname, age] = ['Ann', 'Doe', 22];
-		console.log(age); // 22
-		console.log(name); // Ann
-
-
-		let [breed, petname, ...petDetails] = ['Korgi', 'Katz', 'Katy', 2, 'Kyiv'];
-
-		const block = {
-			width: 200,
-			height: 50,
-			background: 'black',
-			color: 'white',
-			border: 'gray'
-		}
-
-		let {width, height, ...colors} = block;
-
-		let {firstname: n, age: a, ...rest } = student;
 
 	</script>
 
