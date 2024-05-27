@@ -11,214 +11,218 @@
 			box-sizing: border-box;
 		}
 
-		.slider{
-			height: 400px;
-			margin-bottom: 0px;
-			position: relative;
-		}
-
-		.slide{
-			position: absolute;
-			left: 0;
-			top: 0;
-			opacity: 0;
-			width: 100%;
-			height: 100%;
-			background-color: gray;
-			color: #fff;
-			text-align: center;
-			font-size: 100px;
-			line-height: 300px;
-			transition: opacity 0.4s linear;
-		}
-
-		.slide:nth-of-type(2){
-			background-color: hotpink;
-		}
-		.slide:nth-of-type(3){
-			background-color: lightblue;
-		}
-		.slide:nth-of-type(4){
-			background-color: lightgreen;
-		}
-		.slide:nth-of-type(5){
-			background-color: gold;
-		}
-
-		.slide.active {
-			opacity: 1;
-		}
-
-		.prev, .next {
-			position: absolute;
-			z-index: 5;
-			top: 120px;
-			left: 0;
-			font-size: 60px;
-			line-height: 1;
-			color: #ffffff;
-			cursor: pointer;
-			transform: scaleX(0.7);
-		}
-		.next {
-			left: auto;
-			right: 0;
-		}
-
-		.slidernavs {
-			position: absolute;
-			z-index: 5;
-			bottom: 18px;
-			width: 100%;
+		.todoapp {
 			display: flex;
-			justify-content: center;
+			flex-direction: column;
 			align-items: center;
 		}
 
-		.dot {
-			width: 14px;
-			height: 14px;
-			border-radius: 50%;
-			border: 2px solid #ffffff;
-			cursor: pointer;
-			margin: 0 7px;
+		.todoform{
+			margin: 100px auto;
+			width: 60%;
 		}
 
-		.dot.active{
-			background-color: #ffffff;
+		li{
+			font-size: 24px;
+			margin-bottom: 10px;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.done{
+			text-decoration: line-through;
+		}
+		
+		.del_btn, .edit_btn {
+			display: inline-block;
+			width: 24px;
+			height: 24px;
+			background-size: cover;
+			cursor: pointer;
+			margin-left: 20px;
+		}
+
+		.del_btn {
+			background-image: url('delete.png');
+		}
+
+		.edit_btn {
+			background-image: url('edit.png');
 		}
 
 	</style>
 </head>
 <body>
 
+	<div class="todoapp">
 
-	<div class="slider">
-		<div class="slide active">Slide 1</div>
-		<div class="slide">Slide 2</div>
-		<div class="slide">Slide 3</div>
-		<div class="slide">Slide 4</div>
-		<div class="slide">Slide 5</div>
+		<h1>To Do List</h1>
 
-		<div class="prev">&lt;</div>
-		<div class="next">&gt;</div>
+		<form class="todoform">
+			<input id="todoinput" type="text" placeholder="Type your task">
+			<input type="submit" value="Save">
+		</form>
 
-		<div class="slidernavs">
-			<div data-slide="0" class="dot active"></div>
-			<div data-slide="1" class="dot"></div>
-			<div data-slide="2" class="dot"></div>
-			<div data-slide="3" class="dot"></div>
-			<div data-slide="4" class="dot"></div>
-		</div>
+		<h2>Any tasks yet. Add them with form above.</h2>
+
+		<ol class="todolist"></ol>
+
 	</div>
-
-
-	<div class="slider">
-		<div class="slide active">Slide 1</div>
-		<div class="slide">Slide 2</div>
-		<div class="slide">Slide 3</div>
-		<div class="slide">Slide 4</div>
-		<div class="slide">Slide 5</div>
-
-		<div class="prev">&lt;</div>
-		<div class="next">&gt;</div>
-
-		<div class="slidernavs">
-			<div data-slide="0" class="dot active"></div>
-			<div data-slide="1" class="dot"></div>
-			<div data-slide="2" class="dot"></div>
-			<div data-slide="3" class="dot"></div>
-			<div data-slide="4" class="dot"></div>
-		</div>
-	</div>
-
-
-	<div class="slider">
-		<div class="slide active">Slide 1</div>
-		<div class="slide">Slide 2</div>
-		<div class="slide">Slide 3</div>
-		<div class="slide">Slide 4</div>
-		<div class="slide">Slide 5</div>
-
-		<div class="prev">&lt;</div>
-		<div class="next">&gt;</div>
-
-		<div class="slidernavs">
-			<div data-slide="0" class="dot active"></div>
-			<div data-slide="1" class="dot"></div>
-			<div data-slide="2" class="dot"></div>
-			<div data-slide="3" class="dot"></div>
-			<div data-slide="4" class="dot"></div>
-		</div>
-	</div>
-
-
 	
 	<script>
 
-		// OOP slider 
+		// To Do List
 
-		class Slider{
-			constructor(parent, time = 1500){
-				this.parent = parent;
-				this.slides = parent.getElementsByClassName('slide');
-				this.navs = parent.querySelectorAll('.dot');
-				this.arrPrev = parent.querySelector('.prev');
-				this.arrNext = parent.querySelector('.next');
-				this.currentSlide = 0;
-				this.interval;
-				this.time = time;
+		const storage = window.localStorage;
+		const APP_NAME = 'TodoList';
+		const form = document.querySelector('.todoform');
+		const input = document.querySelector('#todoinput');
+		const txt = document.querySelector('h2');
+		const list = document.querySelector('.todolist');
+		let todos;
+		const json = storage.getItem(APP_NAME);
 
-				this.init();
+		if( json === null || JSON.parse(json).length === 0){
+			todos = [];
+		}
+		else {
+			todos = JSON.parse(json);
+			todos.forEach(item => createLi(item));
+		}
+
+		function saveToLS(){
+			storage.setItem(APP_NAME, JSON.stringify(todos));
+		}
+
+		function checkTodos(){
+			if(todos.length === 0){
+				list.classList.add('hidden');
+				txt.classList.remove('hidden');
+			}
+			else {
+				list.classList.remove('hidden');
+				txt.classList.add('hidden');
+			}
+		}
+		checkTodos();
+
+		function createLi(task){
+			const todo = createEl('li', task.done ?['done']: []);
+			todo.dataset.id = task.id;
+
+			const todotext = createEl('span', [],task.task);
+			const innerInput = createEl('input', ['hidden']);
+			const del = createEl('span', ['del_btn']);
+			const edit = createEl('span',['edit_btn']);
+
+			todo.append(todotext, innerInput, del, edit);
+			list.append(todo);
+		}
+
+		function createEl(tag, classes, text = ''){
+			const el = document.createElement(tag);
+			classes.length > 0 ? el.classList.add(...classes) : null;
+			el.innerText = text;
+			return el;
+		}
+
+		function saveTask(){
+			const text = input.value;
+			if(text.length > 2){
+				const id = Date.now();
+				const task = {
+					task: text,
+					id: id,
+					done: false
+				};
+				todos.push(task);
 				
-				this.arrPrev.onclick = () => {
-					this.currentSlide = this.currentSlide > 0 ? --this.currentSlide : this.slides.length - 1;
-					this.changeSlide();
+				createLi(task);
+				saveToLS();
+				
+				input.value = '';
+				if(todos.length === 1){
+					checkTodos();
 				}
-
-				this.arrNext.onclick = () => {
-					this.currentSlide = this.currentSlide < this.slides.length - 1 ? ++this.currentSlide : 0;
-					this.changeSlide();
-				}
-
-				for(let dot of this.navs){
-					dot.onclick = () => {
-						this.currentSlide = +dot.dataset.slide;
-						this.changeSlide();
-					}
-				}
-			}
-
-			changeSlide(){
-				clearInterval(this.interval);
-				for(let i = 0; i < this.slides.length; i++){
-					this.slides[i].classList.remove('active');
-					this.navs[i].classList.remove('active');
-				}
-				this.slides[this.currentSlide].classList.add('active');
-				this.navs[this.currentSlide].classList.add('active');
-				this.init();
-			}
-
-			init(){
-				this.interval = setInterval(()=>{	
-					this.currentSlide = this.currentSlide < this.slides.length - 1 ? ++this.currentSlide : 0;
-					this.changeSlide();
-				}, this.time);
 			}
 		}
-	
-		const sliders = document.querySelectorAll('.slider');
-		for(let s of sliders){
-			const time = Math.floor(Math.random()*(3000 - 2000) + 2000);
-			new Slider(s,time);
+
+		function findTodo(id){
+			let i;
+			todos.forEach((item, index) => {
+				if(item.id === id ){
+					i = index;
+				}
+			});
+			return i;	
 		}
-		
 
+		function markAsDone(el){
+			el.classList.toggle('done');
+			const item = todos[findTodo(+el.dataset.id)];
+			item.done = !item.done;
+			saveToLS();
+		}
 
-		// dots
+		function deleteTask(el){
+			const id = +el.dataset.id;
+			el.remove();
+			todos.splice([findTodo(id)], 1);
+			saveToLS();
+			if(todos.length === 0){
+				checkTodos();
+			}	
+		}
 
-		
+		function editTask(el){
+			const id = +el.dataset.id;
+			
+			const inp = el.querySelector('input');
+			const textspan = el.querySelector('span');
+
+			inp.value = textspan.textContent;
+			inp.classList.remove('hidden');
+			textspan.classList.add('hidden');
+
+			inp.onkeyup = (e) => {
+				if(e.key === 'Enter'){
+					textspan.textContent = inp.value;
+					inp.classList.add('hidden');
+					textspan.classList.remove('hidden');
+					const item = findTodo(id);
+					item.task = inp.value;
+					saveToLS();
+				}
+			}
+		}
+
+		form.onsubmit = (event) => {
+			event.preventDefault();
+			saveTask();
+		}
+
+		list.addEventListener('click', (e)=>{
+			if(e.target.classList.contains('del_btn')){
+				deleteTask(e.target.parentNode);
+			}
+			if(e.target.classList.contains('edit_btn')){
+				editTask(e.target.parentNode);
+			}
+			if(e.target.tagName.toLowerCase() === 'li'){
+				markAsDone(e.target);
+			}
+			if(e.target.parentNode.tagName.toLowerCase() === 'li'){
+				markAsDone(e.target.parentNode);
+			}
+		});
+
+		 // JSON.stringify(todos) -> todos to JSON
+		 // JSON.parse(something) -> some JSON to js object/array
+
+		 // localStorage methods: clear() [delete all data from LS], setItem(key, json) [adds to LS], 
+		 // getItem(key) [get json by key], removeItem(key) [remove json by key]
 
 
 	</script>
