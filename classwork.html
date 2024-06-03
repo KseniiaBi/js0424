@@ -14,466 +14,248 @@
 		header {
 			display: flex;
 			justify-content: space-between;
-			align-items: center;
-			background-color: black;
-			color: #ffffff;
-			padding: 10px 30px;
 		}
 
-		.logo{
-			font-size: 40px;
-		}
-
-		nav a{
-			font-size: 18px;
-			color: inherit;
-			text-decoration: none;
-			margin-left: 24px;
-			display: inline-block;
-		}
-
-		.menubtn{
-			position: absolute;
-			top: 20px;
-			right: 30px;
-			width: 24px;
-			height: 24px;
-			display: none;;
-		}
-
-		.menubtn span {
-			position: absolute;
-			width: 100%;
-			height: 2px;
-			display: block;
-			background-color: #ffffff;
-			left: 0;
-			top: 0;
-			transition: transform 0.3s ease-in;
-		}
-
-		.menubtn span:nth-of-type(2){
-			top: 10px;
-			transform-origin: left top;
-		}
-		.menubtn span:nth-of-type(3){
-			top: 20px;
-		}
-
-		.expanded .menubtn span:first-of-type{
-			transform: rotate(45deg) translateX(7px) translateY(7px);
-		}
-		.expanded .menubtn span:nth-of-type(2){
-			transform: scaleX(0);
-		}
-		.expanded .menubtn span:last-of-type{
-			transform: rotate(-45deg) translateX(7px) translateY(-7px);
-		}
-
-
-		@media (max-width: 767px) {
-			nav{
-				display: none;
-			}
-			.expanded nav{
-				background-color: black;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				position: absolute;
-				right: 0;
-				top: 66px;
-				width: 100%;
-				z-index: 5;
-			}
-
-			nav a {
-				display: block;
-				width: 100%;
-				padding: 10px 20px;
-				text-align: center;
-				margin: 0;
-			}
-
-			nav a+a{
-				border-top: 1px solid #ffffff;
-			}
-
-			.menubtn{
-				display: block;
-				cursor: pointer;
-			}
-		}
-
-		.carousel{
-			position: relative;
-			overflow: hidden;
-			margin-bottom: 100px;
-		}
-
-		.carousel_wrap{
+		.shop {
 			display: flex;
-		}
-		.animating.carousel_wrap{
-			transition: transform 0.5s linear;
+			flex-flow: row wrap;
+			align-items: flex-start;
+			justify-content: space-evenly;
+			margin: 100px 0;
 		}
 
-		.carousel_item{
-			width: 300px;
-			height: 150px;
-			color: #fff;
-			background-color: black;
-			margin-right: 30px;
-			flex: 0 0 auto;
-			text-align: center;
-			font-size: 50px;
-			line-height: 150px;
-		}
-		
-
-		.arr_prev, .arr_next{
-			width: 40px;
-			height: 40px;
-			border-radius: 50%;
-			background: lightgrey;
-			color: #ffffff;
-			position: absolute;
-			top: 50px;
-			left: 0;
-			z-index: 2;
-			font-size: 40px;
+		.product{
 			display: flex;
+			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			line-height: 1;
-			cursor: pointer;
-		}
-		.arr_next{
-			left: auto;
-			right: 0;
+			width: 23%;
+			border-radius: 3px;
+			border: 1px solid #e2e2e2;
+			margin-bottom: 40px;
 		}
 
-		/* accordeon*/
-
-		.accordeon {
-			max-width: 500px;
-			margin: 0 auto 100px;
-		}
-		.accordeon_item{
-			margin-bottom: 2px;
-		}
-		.accordeon_title{
-			background-color: black;
-			color: #ffffff;
-			padding: 15px;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-		}
-		.accordeon_content {
-			padding: 15px;
-			display: none;
-		}
-
-		.active .accordeon_content{
-			display: block;
-		}
-
-		.accordeon_control {
-			position: relative;
-			width: 20px;
-			height: 20px;
-			cursor: pointer;
-		}
-
-		.accordeon_control span {
-			display: block;
-			position: absolute;
-			background-color: #ffffff;
+		.product img{
 			width: 100%;
-			height: 2px;
-			top: 8px;
-			left: 0;
-			transition: transform 0.3s ease-in-out;
-		}
-		.accordeon_control span:nth-of-type(2){
-			transform: rotate(90deg);
+			height: 150px;
+			object-fit: cover;
+			object-position: center;
 		}
 
-		.active .accordeon_control span:nth-of-type(2){
-			transform: rotate(0deg);
-		}
-
-		/* tabs */
-
-		.tabs{
-			max-width: 600px;
-			margin-bottom: 100px;
-		}
-
-		.tab_names {
-			display: flex;
-		}
-		.tab_name {
-			padding: 10px 20px;
-			border: 1px solid #000000;
-			margin-right: 10px;
-			border-radius: 5px 5px 0 0;
-			border-bottom: none;
+		.selectbox {
+			position: relative;
+			width: 200px;
+			height: 32px;
+			font-size: 20px;
+			padding: 0 10px;
+			margin: 40px 0;
+			border: 1px solid #e2e2e2;
 			cursor: pointer;
 		}
-		.tab {
-			border: 1px solid #000000;
-			padding: 30px;
-			display: none;
-		}
-		.tab.active {
-			display: block;
-		}
-		.tab_name.active {
-			background-color: #000000;
-			color: #ffffff;
-			font-weight: bold;
+
+		.selectbox::after{
+			position: absolute;
+			z-index: 3;
+			content: '🔽';
+			right: 10px;
+			top: 2px;
+			transition: transform 0.3s linear;
 		}
 
+		.select_options{
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			width: 100%;
+			border: 1px solid #e2e2e2;
+		}
+
+		.option {
+			padding: 10px;
+		}
+
+		.option + .option {
+			border-top: 1px solid #e2e2e2;
+		}
+
+		.selectbox.expanded .select_options{
+			display: block;
+		}
+		.selectbox.expanded:after{
+			transform: rotate(180deg);
+		}
 
 	</style>
 </head>
 <body>
 
 	<header>
-		<span class="logo">LOGO</span>
+		<div class="logo">LOGO</div>
 		<nav>
-			<a href="#">Home</a>
+			<a href="#">Shop</a>
 			<a href="#">About</a>
-			<a href="#">Portfolio</a>
 			<a href="#">Contact</a>
+			<a href="cart.html">
+				<span class="cart_count">0</span> item(s), 
+				<span class="cart_total">0</span> UAH  in 🛒  </a>
 		</nav>
-		<div class="menubtn">
-			<span></span>
-			<span></span>
-			<span></span>
-		</div>
 	</header>
 
-	<div class="carousel">
-		<div class="carousel_wrap">
-			<div class="carousel_item">1</div>
-			<div class="carousel_item">2</div>
-			<div class="carousel_item">3</div>
-			<div class="carousel_item">4</div>
-			<div class="carousel_item">5</div>
-			<div class="carousel_item">6</div>
-			<div class="carousel_item">7</div>
-		</div>
-		<div class="arr_prev">&lt;</div>
-		<div class="arr_next">&gt;</div>
-	</div>
+	<select class="sorter">
+		<option disabled selected>Sort by</option>
+		<option value="name">Sort by name</option>
+		<option value="price">Sort by price</option>
+	</select>
 
-
-	<div class="accordeon">
-		<div class="accordeon_item">
-			<div class="accordeon_title">
-				<h3>Title 1</h3>
-				<div class="accordeon_control">
-					<span></span>
-					<span></span>
-				</div>
-			</div>
-			<div class="accordeon_content">
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-					Aliquid quisquam sit cum porro quae recusandae reiciendis reprehenderit, 
-					itaque sapiente eaque quas quos aut dolor nam eveniet ipsam doloribus minima ratione.</p>
-			</div>
-		</div>
-		<div class="accordeon_item">
-			<div class="accordeon_title">
-				<h3>Title 1</h3>
-				<div class="accordeon_control">
-					<span></span>
-					<span></span>
-				</div>
-			</div>
-			<div class="accordeon_content">
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-					Aliquid quisquam sit cum porro quae recusandae reiciendis reprehenderit, 
-					itaque sapiente eaque quas quos aut dolor nam eveniet ipsam doloribus minima ratione.</p>
-			</div>
-		</div>
-		<div class="accordeon_item">
-			<div class="accordeon_title">
-				<h3>Title 1</h3>
-				<div class="accordeon_control">
-					<span></span>
-					<span></span>
-				</div>
-			</div>
-			<div class="accordeon_content">
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-					Aliquid quisquam sit cum porro quae recusandae reiciendis reprehenderit, 
-					itaque sapiente eaque quas quos aut dolor nam eveniet ipsam doloribus minima ratione.</p>
-			</div>
-		</div>
-		<div class="accordeon_item">
-			<div class="accordeon_title">
-				<h3>Title 1</h3>
-				<div class="accordeon_control">
-					<span></span>
-					<span></span>
-				</div>
-			</div>
-			<div class="accordeon_content">
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-					Aliquid quisquam sit cum porro quae recusandae reiciendis reprehenderit, 
-					itaque sapiente eaque quas quos aut dolor nam eveniet ipsam doloribus minima ratione.</p>
-			</div>
-		</div>
-		<div class="accordeon_item">
-			<div class="accordeon_title">
-				<h3>Title 1</h3>
-				<div class="accordeon_control">
-					<span></span>
-					<span></span>
-				</div>
-			</div>
-			<div class="accordeon_content">
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-					Aliquid quisquam sit cum porro quae recusandae reiciendis reprehenderit, 
-					itaque sapiente eaque quas quos aut dolor nam eveniet ipsam doloribus minima ratione.</p>
-			</div>
+	<div class="selectbox">
+		<div class="selected">Sort by</div>
+		<div class="select_options">
+			<div class="option" data-value="name">Sort by name</div>
+			<div class="option" data-value="price">Sort by price</div>
 		</div>
 	</div>
 
-	<div class="tabs">
-		<div class="tab_names">
-			<div class="tab_name active" data-id="contact">Contact</div>
-			<div class="tab_name" data-id="delivery">Delivery</div>
-			<div class="tab_name" data-id="payment">Payment</div>
-		</div>
-		<div class="tab active" id="contact">
-			<h3>Content 1</h3>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-			Dolore porro minima alias officiis nobis ex laudantium eveniet ipsum in amet! 
-			Nesciunt, debitis odit. Vel deleniti vitae accusamus velit officiis consectetur!
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-			Dolore porro minima alias officiis nobis ex laudantium eveniet ipsum in amet! 
-			Nesciunt, debitis odit. Vel deleniti vitae accusamus velit officiis consectetur!
-		</div>
-		<div class="tab" id="delivery">
-			<h3>Content 2</h3>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-			Dolore porro minima alias officiis nobis ex laudantium eveniet ipsum in amet! 
-			Nesciunt, debitis odit. Vel deleniti vitae accusamus velit officiis consectetur!
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-			Dolore porro minima alias officiis nobis ex laudantium eveniet ipsum in amet! 
-			Nesciunt, debitis odit. Vel deleniti vitae accusamus velit officiis consectetur!
-		</div>
-		<div class="tab" id="payment">
-			<h3>Content 3</h3>
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-			Dolore porro minima alias officiis nobis ex laudantium eveniet ipsum in amet! 
-			Nesciunt, debitis odit. Vel deleniti vitae accusamus velit officiis consectetur!
-			Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-			Dolore porro minima alias officiis nobis ex laudantium eveniet ipsum in amet! 
-			Nesciunt, debitis odit. Vel deleniti vitae accusamus velit officiis consectetur!
-		</div>
-	</div>
+	<div class="shop"></div>
+	
 	
 	<script>
 
-		// FE components
+		// http request
 
-		// burber menu
-		const header = document.querySelector('header');
-		const menubtn = document.querySelector('.menubtn');
+		// 1) XMLHttpRequest
 
-		menubtn.onclick = () => header.classList.toggle('expanded');
+		// url method [GET, POST, PUT, DELETE] sync [yes/no]
+		let data;
+		const shop = document.querySelector('.shop');
+		const URL = 'data.json'; // https://openweatherapi.com/mnsflsflksfe.....sddfm
 
+		const xhr = new XMLHttpRequest(); // readyState = 0
+		// xhr.onreadystatechange = () => {
+		// 	if(xhr.readyState === 3){
+		// 		console.log("In progress");
+		// 	}
+		// 	else if(xhr.readyState === 4){
+		// 		console.log('Ready!');
+		// 	}
+		// };
+		xhr.open('GET', URL); // xhr.open('GET', url, async*, user*, pass*); // readyState = 1
+		xhr.send();  // readyState = 2
+		// readyState = 3 can be used for loaders
 
-		// carousel
-		const carousel = document.querySelector('.carousel_wrap');
-		const arrPrev = document.querySelector('.arr_prev');
-		const arrNext = document.querySelector('.arr_next');
-		const carouselItems = document.querySelectorAll('.carousel_item');
-		const itemWidth = carouselItems[0].offsetWidth;
-		let itemMargin = window.getComputedStyle(carouselItems[0]).marginRight;
-		itemMargin = +itemMargin.slice(0, itemMargin.length - 2);
-		const targetTransform = itemMargin + itemWidth;
-
-		function showPrev(){
-			//move last car item before first
-			carousel.prepend(carousel.lastElementChild);
-			// transform to hide 'offscreen' item
-			carousel.style.transform = `translateX(-${targetTransform}px)`;
-			// smooth translate to show hidden item
-			setTimeout(() => {
-				carousel.classList.add('animating');
-				carousel.style.transform = `translateX(0px)`;
-			}, 10);
-			setTimeout(() => {
-				carousel.classList.remove('animating');
-			}, 600);
+		xhr.onload = () => {
+			data = JSON.parse(xhr.responseText);
+			showProducts();
 		}
 
-		function showNext(){
-			carousel.classList.add('animating');
-			carousel.style.transform = `translateX(-${targetTransform}px)`;
-			setTimeout(() => {
-				carousel.classList.remove('animating');
-				carousel.style.transform = `translateX(0px)`;
-				carousel.append(carousel.firstElementChild);
-			}, 600);
+		function showProducts(){
+			data.forEach(item => createProductMarkup(item));
+		}
+		
+		function createProductMarkup(obj){
+			const product = document.createElement('div');
+			product.classList.add('product');
+
+			const img = new Image();
+			img.src = obj.image;
+			img.alt = obj.name;
+
+			const prodName = document.createElement('h4');
+			prodName.innerText = obj.name;
+			prodName.classList.add('prod_name');
+
+			const price = document.createElement('h2');
+			price.textContent = `${obj.price} UAH`;
+			price.classList.add('prod_price');
+
+			const btnBuy = document.createElement('button');
+			btnBuy.innerText = 'Add to cart';
+			btnBuy.onclick = () => addToCart(obj.id);
+
+			product.append(img, prodName, price, btnBuy);
+
+			shop.append(product);
 		}
 
-		arrPrev.onclick = showPrev;
-		arrNext.onclick = showNext;
 
+		// sort products
 
+		const selectbox = document.querySelector('.sorter');
+		selectbox.onchange = () => sortProducts(selectbox.value);
 
-		// accordeon
-		const accordeon = document.querySelector('.accordeon');
-		const accItems = document.querySelectorAll('.accordeon_item');
-		accordeon.addEventListener('click', (e) => {
-			if(e.target.classList.contains('accordeon_title') 
-			|| e.target.classList.contains('accordeon_control')
-			|| e.target.parentNode.classList.contains('accordeon_control')){
-				for(let item of accItems){
-					item.classList.remove('active');
-				}
-				e.target.closest('.accordeon_item').classList.add('active');
+		// with dropdown
+
+		const selbox = document.querySelector('.selectbox');
+		const selected = document.querySelector('.selected');
+		selbox.onclick = (e) => {
+			selbox.classList.toggle('expanded');
+			if(e.target.classList.contains('option')){
+				selected.innerText = e.target.innerText;
+				sortProducts(e.target.dataset.value);
 			}
-		});
+		};
 
+		function sortProducts(attr){
+			let prods = document.querySelectorAll(`.prod_${attr}`);
+			prods = [].slice.call(prods);
 
-		// tabs
-
-		const tabNames = document.querySelectorAll('.tab_name');
-		const tabContainers = document.querySelectorAll('.tab');
-
-		for(let tab of tabNames){
-			tab.onclick = ()=> switchTab(tab.dataset.id);
-		}
-
-		function switchTab(id){
-			for(let i = 0; i < tabNames.length; i++){
-				if(tabNames[i].dataset.id === id){
-					tabNames[i].classList.add('active');
-					tabContainers[i].classList.add('active');
+			prods.sort((a,b) => {
+				if(attr === 'name'){
+					a = a.innerText;
+					b = b.innerText;
 				}
 				else{
-					tabNames[i].classList.remove('active');
-					tabContainers[i].classList.remove('active');
+					a = +a.innerText.slice(0, a.innerText.length - 4);
+					b = +b.innerText.slice(0, b.innerText.length - 4);
 				}
+
+				return a === b ? 0 : a<b ? -1 : 1;
+			});
+
+			prods.forEach((item, index) => item.parentNode.style.order = index);
+		}
+
+
+		// cart 
+
+		const cart = [];
+		let cartTotal = 0; // sum
+		let cartCount = 0; // items count
+		const spanTotal = document.querySelector('.cart_total');
+		const spanCount = document.querySelector('.cart_count');
+
+
+		function addToCart(id) {
+			let added;
+			data.forEach(item=> {
+				if(item.id === id){
+					added = item;
+				}
+			});
+
+			let wasInCart = false;
+			let indexInCart;
+			cart.forEach((item, index) => {
+				if(item.id === id){
+					wasInCart = true;
+					indexInCart = index;
+				}
+			});
+
+			if(!wasInCart){
+				cart.push({...added, count: 1});
 			}
+			else {
+				cart[indexInCart].count += 1;
+			}
+
+
+			cartTotal += added.price;
+			cartCount += 1;
+			spanCount.innerText = cartCount;
+			spanTotal.innerText = cartTotal;
 		}
 
-		const hash = window.location.hash.slice(1);
-		if(hash.length > 0 && document.getElementById(hash) !== null){
-			switchTab(hash);
-		}
-
-
-		// HW !!!!!! написать мне в Тг помимо вашей темы тестового проекта еще и его декомпозицию по функционалу 
 
 	</script>
 
