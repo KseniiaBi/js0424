@@ -18,202 +18,87 @@
 
 	
 	
-	<script>
+	<script type="module">
 
-		// Map 
-		// set(key, value), get(key), has(key), delete(key), clear()
-		// size property
+		// Promises 
 
-		let m = new Map();
+		let promise = new Promise(function(resolve, reject) {
+				// setTimeout(()=>resolve(1), 1000);
+			 reject('404');
+		});
 
-		m.set('a', 1);
-		m.set(2, 'b');
-		m.set(true, 'isActive');
+		// promise.then(function(result){
+		// 	console.log(`Promise returned result: ${result}`);
+		// }, function(error){
+		// 	console.warn(`Was caught error ${error}`);
+		// })
 
-		// chaining
-		m.set(3, 'c')
-		 .set(4, 'd')
-		 .set(false, 'f');
+		// promise.then(
+		// 	result => console.log(`Promise returned result: ${result}`),
+		// 	error => console.warn(`Was caught error ${error}`)
+		// );
 
-		 console.log(`Map m has size ${m.size}`);
+		promise.then(result => console.log(`Promise returned result: ${result}`))
+			   .catch(error => console.warn(`Was caught error ${error}`))
+			   .finally(console.log('Finished work with promise'));
 
-		 console.log(m);
 
 
-		 // keys(), values(), entries()
+		const p = new Promise((resolve, reject)=>{
+			confirm('Delete item from cart?') ? resolve('yes') : reject('no');
+		});
 
-		 for(let data of m.values()){
+		p.then(
+			res => console.log(`Deleting item: ${res}`),
+			err => console.warn(`Deleting item: ${err}`),
+		)
+		
+
+		// const xp = new Promise((resolve, reject) => {
+		// 	const xhr = new XMLHttpRequest();
+		// 	xhr.open('GET', 'data.json');
+		// 	xhr.send();
+		// 	xhr.onload = () => {
+		// 		if(xhr.status === 200){
+		// 			resolve(xhr.responseText);
+		// 		}
+		// 		else{
+		// 			reject(xhr.statusText);
+		// 		}
+		// 	}
+		// });
+
+		// xp.then(result => console.log(JSON.parse(result)))
+		// 	.catch(error=> console.error(error));
+
+
+		let fp = await fetch('data.json');
+
+		if(fp.ok){
+			
+			let data = await fp.json();
 			console.log(data);
-		 }
-
-		 let shoes = new Map([
-			[36, 22.5],
-			[37, 23],
-			[38, 23.5]
-		 ]);
-
-		 for(let size of shoes.entries()){
-		 	console.log(size.toString());
-		 }
-
-		 shoes.forEach((val, key, map) => {
-			console.warn(`${key}: ${val}`);
-		 });
-
-
-		 // map from Object
-
-		 const student = {
-			firstname: 'Mary',
-			lastname: 'Peterson',
-			age: 23,
-			course: 'Javascript'
-		 }
-
-		 let sMap = new Map(Object.entries(student));
-		 console.log(sMap);
-
-		 const s2 = Object.fromEntries(sMap.entries());
-		 console.log(sMap.get('course'));
-		 console.log(s2);
-
-
-		 // Set
-		// add(value), delete(value), has(value), clear()
-		// size
-
-		const set = new Set();
-
-		const user = {
-			role: 'user',
-			name: 'user30183yfbn',
-			ip: '192.168.0.1'
+		}
+		else{
+			console.error(`Error was occured ${fp.status}`);
 		}
 
-		const admin = {
-			role: 'admin',
-			name: 'administrator',
-			access: 'read/write'
-		}
+		// text(), json(), formData(), blob(), arrayBuffer
 
+		// {method, headers, body}
 
-		set.add(student);
-		set.add(admin);
-		set.add(user);
-		set.add(s2);
-		set.add(user);
-		set.add(admin);
-		set.add(user);
-		set.add(admin)
-		set.add(user);
-		set.add(admin);
-
-		console.log(set.size);
-
-		// for(let value of set){
-		// 	console.log(value);
+		// async function foo(){
+		// 	return 0;
 		// }
 
-		set.forEach((val, valReallyAgain, collection) => console.error(val));
-
-		// keys(), values, entries()
+		// foo().then(res =>console.log(res));
 
 
-		// WeakMap, WeakSet
-		// keys - only objects
-		// has, delete, add/set
-		// keys(), values, entries() and iteration are not available for Weak Collections
-
-
-
-		// Symbol
-
-		let name = Symbol('name');
-		let name2 = Symbol('name');
-		console.log(name === name2);
-		
-		// alert(name); //Cannot convert a Symbol value to a string 
-
-		// console.log(name.toString());
-		console.log(name.description);
-
-		user[name] = 1;
-
-		for(let prop in user){
-			console.log(prop);
-		}
-
-		const id = Symbol('id');
-		const obj = {
-			num: 1111,
-			[id]: 1
-		}
-
-
-		let mary = Symbol.for('name');
-
-		let peter = Symbol.for('name');
-
-		console.log(peter === mary);
-
-		let sym = Symbol.for('name');
-		let sym2 = Symbol.for('id');
-
-		console.log(Symbol.keyFor(sym));
-		console.log(Symbol.keyFor(sym2));
-
-
-		// Symbol.iterator
-
-		let range = {
-			from: 1,
-			to: 5
-		}
-
-		range[Symbol.iterator] = function () {
-			return {
-				current: this.from,
-				last: this.to,
-
-				next(){
-					if(this.current <= this.last){
-						return {
-							done: false,
-							value: this.current++,
-							sum: this.sum += this.curren
-						}
-					}
-					else{
-						return {done: true}
-					}
-				}
-			}
-		}
-
-		for(let num of range){
-			console.log(num);
-		}
-
-
-		function sum(obj){
-			let sum = 0;
-			for(let arg of obj){
-				sum += arg;
-			}
-			console.warn(sum);
-		}
-
-		sum(range);
-
-
-
-
-
+		// let val = await promise100
 
 
 	</script>
 
-	<script type="module" src="common.js"></script>
 
 </body>
 </html>
