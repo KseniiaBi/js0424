@@ -11,253 +11,209 @@
 			box-sizing: border-box;
 		}
 
-		header {
-			display: flex;
-			justify-content: space-between;
-		}
-
-		.shop {
-			display: flex;
-			flex-flow: row wrap;
-			align-items: flex-start;
-			justify-content: space-evenly;
-			margin: 100px 0;
-		}
-
-		.product{
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			width: 23%;
-			border-radius: 3px;
-			border: 1px solid #e2e2e2;
-			margin-bottom: 40px;
-		}
-
-		.product img{
-			width: 100%;
-			height: 150px;
-			object-fit: cover;
-			object-position: center;
-		}
-
-		.selectbox {
-			position: relative;
-			width: 200px;
-			height: 32px;
-			font-size: 20px;
-			padding: 0 10px;
-			margin: 40px 0;
-			border: 1px solid #e2e2e2;
-			cursor: pointer;
-		}
-
-		.selectbox::after{
-			position: absolute;
-			z-index: 3;
-			content: '🔽';
-			right: 10px;
-			top: 2px;
-			transition: transform 0.3s linear;
-		}
-
-		.select_options{
-			display: none;
-			position: absolute;
-			top: 100%;
-			left: 0;
-			width: 100%;
-			border: 1px solid #e2e2e2;
-		}
-
-		.option {
-			padding: 10px;
-		}
-
-		.option + .option {
-			border-top: 1px solid #e2e2e2;
-		}
-
-		.selectbox.expanded .select_options{
-			display: block;
-		}
-		.selectbox.expanded:after{
-			transform: rotate(180deg);
-		}
 
 	</style>
 </head>
 <body>
 
-	<header>
-		<div class="logo">LOGO</div>
-		<nav>
-			<a href="#">Shop</a>
-			<a href="#">About</a>
-			<a href="#">Contact</a>
-			<a href="cart.html">
-				<span class="cart_count">0</span> item(s), 
-				<span class="cart_total">0</span> UAH  in 🛒  </a>
-		</nav>
-	</header>
-
-	<select class="sorter">
-		<option disabled selected>Sort by</option>
-		<option value="name">Sort by name</option>
-		<option value="price">Sort by price</option>
-	</select>
-
-	<div class="selectbox">
-		<div class="selected">Sort by</div>
-		<div class="select_options">
-			<div class="option" data-value="name">Sort by name</div>
-			<div class="option" data-value="price">Sort by price</div>
-		</div>
-	</div>
-
-	<div class="shop"></div>
 	
 	
 	<script>
 
-		// http request
+		// Map 
+		// set(key, value), get(key), has(key), delete(key), clear()
+		// size property
 
-		// 1) XMLHttpRequest
+		let m = new Map();
 
-		// url method [GET, POST, PUT, DELETE] sync [yes/no]
-		let data;
-		const shop = document.querySelector('.shop');
-		const URL = 'data.json'; // https://openweatherapi.com/mnsflsflksfe.....sddfm
+		m.set('a', 1);
+		m.set(2, 'b');
+		m.set(true, 'isActive');
 
-		const xhr = new XMLHttpRequest(); // readyState = 0
-		// xhr.onreadystatechange = () => {
-		// 	if(xhr.readyState === 3){
-		// 		console.log("In progress");
-		// 	}
-		// 	else if(xhr.readyState === 4){
-		// 		console.log('Ready!');
-		// 	}
-		// };
-		xhr.open('GET', URL); // xhr.open('GET', url, async*, user*, pass*); // readyState = 1
-		xhr.send();  // readyState = 2
-		// readyState = 3 can be used for loaders
+		// chaining
+		m.set(3, 'c')
+		 .set(4, 'd')
+		 .set(false, 'f');
 
-		xhr.onload = () => {
-			data = JSON.parse(xhr.responseText);
-			showProducts();
+		 console.log(`Map m has size ${m.size}`);
+
+		 console.log(m);
+
+
+		 // keys(), values(), entries()
+
+		 for(let data of m.values()){
+			console.log(data);
+		 }
+
+		 let shoes = new Map([
+			[36, 22.5],
+			[37, 23],
+			[38, 23.5]
+		 ]);
+
+		 for(let size of shoes.entries()){
+		 	console.log(size.toString());
+		 }
+
+		 shoes.forEach((val, key, map) => {
+			console.warn(`${key}: ${val}`);
+		 });
+
+
+		 // map from Object
+
+		 const student = {
+			firstname: 'Mary',
+			lastname: 'Peterson',
+			age: 23,
+			course: 'Javascript'
+		 }
+
+		 let sMap = new Map(Object.entries(student));
+		 console.log(sMap);
+
+		 const s2 = Object.fromEntries(sMap.entries());
+		 console.log(sMap.get('course'));
+		 console.log(s2);
+
+
+		 // Set
+		// add(value), delete(value), has(value), clear()
+		// size
+
+		const set = new Set();
+
+		const user = {
+			role: 'user',
+			name: 'user30183yfbn',
+			ip: '192.168.0.1'
 		}
 
-		function showProducts(){
-			data.forEach(item => createProductMarkup(item));
+		const admin = {
+			role: 'admin',
+			name: 'administrator',
+			access: 'read/write'
 		}
+
+
+		set.add(student);
+		set.add(admin);
+		set.add(user);
+		set.add(s2);
+		set.add(user);
+		set.add(admin);
+		set.add(user);
+		set.add(admin)
+		set.add(user);
+		set.add(admin);
+
+		console.log(set.size);
+
+		// for(let value of set){
+		// 	console.log(value);
+		// }
+
+		set.forEach((val, valReallyAgain, collection) => console.error(val));
+
+		// keys(), values, entries()
+
+
+		// WeakMap, WeakSet
+		// keys - only objects
+		// has, delete, add/set
+		// keys(), values, entries() and iteration are not available for Weak Collections
+
+
+
+		// Symbol
+
+		let name = Symbol('name');
+		let name2 = Symbol('name');
+		console.log(name === name2);
 		
-		function createProductMarkup(obj){
-			const product = document.createElement('div');
-			product.classList.add('product');
+		// alert(name); //Cannot convert a Symbol value to a string 
 
-			const img = new Image();
-			img.src = obj.image;
-			img.alt = obj.name;
+		// console.log(name.toString());
+		console.log(name.description);
 
-			const prodName = document.createElement('h4');
-			prodName.innerText = obj.name;
-			prodName.classList.add('prod_name');
+		user[name] = 1;
 
-			const price = document.createElement('h2');
-			price.textContent = `${obj.price} UAH`;
-			price.classList.add('prod_price');
+		for(let prop in user){
+			console.log(prop);
+		}
 
-			const btnBuy = document.createElement('button');
-			btnBuy.innerText = 'Add to cart';
-			btnBuy.onclick = () => addToCart(obj.id);
-
-			product.append(img, prodName, price, btnBuy);
-
-			shop.append(product);
+		const id = Symbol('id');
+		const obj = {
+			num: 1111,
+			[id]: 1
 		}
 
 
-		// sort products
+		let mary = Symbol.for('name');
 
-		const selectbox = document.querySelector('.sorter');
-		selectbox.onchange = () => sortProducts(selectbox.value);
+		let peter = Symbol.for('name');
 
-		// with dropdown
+		console.log(peter === mary);
 
-		const selbox = document.querySelector('.selectbox');
-		const selected = document.querySelector('.selected');
-		selbox.onclick = (e) => {
-			selbox.classList.toggle('expanded');
-			if(e.target.classList.contains('option')){
-				selected.innerText = e.target.innerText;
-				sortProducts(e.target.dataset.value);
+		let sym = Symbol.for('name');
+		let sym2 = Symbol.for('id');
+
+		console.log(Symbol.keyFor(sym));
+		console.log(Symbol.keyFor(sym2));
+
+
+		// Symbol.iterator
+
+		let range = {
+			from: 1,
+			to: 5
+		}
+
+		range[Symbol.iterator] = function () {
+			return {
+				current: this.from,
+				last: this.to,
+
+				next(){
+					if(this.current <= this.last){
+						return {
+							done: false,
+							value: this.current++,
+							sum: this.sum += this.curren
+						}
+					}
+					else{
+						return {done: true}
+					}
+				}
 			}
-		};
+		}
 
-		function sortProducts(attr){
-			let prods = document.querySelectorAll(`.prod_${attr}`);
-			prods = [].slice.call(prods);
-
-			prods.sort((a,b) => {
-				if(attr === 'name'){
-					a = a.innerText;
-					b = b.innerText;
-				}
-				else{
-					a = +a.innerText.slice(0, a.innerText.length - 4);
-					b = +b.innerText.slice(0, b.innerText.length - 4);
-				}
-
-				return a === b ? 0 : a<b ? -1 : 1;
-			});
-
-			prods.forEach((item, index) => item.parentNode.style.order = index);
+		for(let num of range){
+			console.log(num);
 		}
 
 
-		// cart 
-
-		const cart = [];
-		let cartTotal = 0; // sum
-		let cartCount = 0; // items count
-		const spanTotal = document.querySelector('.cart_total');
-		const spanCount = document.querySelector('.cart_count');
-
-
-		function addToCart(id) {
-			let added;
-			data.forEach(item=> {
-				if(item.id === id){
-					added = item;
-				}
-			});
-
-			let wasInCart = false;
-			let indexInCart;
-			cart.forEach((item, index) => {
-				if(item.id === id){
-					wasInCart = true;
-					indexInCart = index;
-				}
-			});
-
-			if(!wasInCart){
-				cart.push({...added, count: 1});
+		function sum(obj){
+			let sum = 0;
+			for(let arg of obj){
+				sum += arg;
 			}
-			else {
-				cart[indexInCart].count += 1;
-			}
-
-
-			cartTotal += added.price;
-			cartCount += 1;
-			spanCount.innerText = cartCount;
-			spanTotal.innerText = cartTotal;
+			console.warn(sum);
 		}
+
+		sum(range);
+
+
+
+
+
 
 
 	</script>
+
+	<script type="module" src="common.js"></script>
 
 </body>
 </html>
