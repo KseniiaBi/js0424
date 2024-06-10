@@ -11,92 +11,150 @@
 			box-sizing: border-box;
 		}
 
+		.carousel {
+			position: relative;
+			overflow: hidden;
+		}
 
+		.carousel_wrap{
+			display: flex;
+			position: relative;
+		}
+
+		.carousel_item{
+			flex: 0 0 300px;
+			height: 150px;
+			border: 2px solid black;
+			line-height: 150px;
+			font-size: 50px;
+			text-align: center;
+			margin-right: 20px;
+		}
+
+		.arr_prev, .arr_next {
+			position: absolute;
+			top: 50px;
+			font-size: 50px;
+			left: 0;
+			transform: scaleX(0.5);
+			cursor: pointer;
+		}
+		.arr_next{
+			left: auto;
+			right: 0;
+		}
+
+		section {
+			height: 1000px;
+		}
 	</style>
 </head>
 <body>
 
+	<nav>
+		<a class="scroll_link" href="#about">About</a>
+		<a class="scroll_link" href="#portfolio">Portfolio</a>
+		<a class="scroll_link" href="#contact">Contact</a>
+	</nav>
+
+	<div class="carousel">
+		<div class="carousel_wrap">
+			<div class="carousel_item">1</div>
+			<div class="carousel_item">2</div>
+			<div class="carousel_item">3</div>
+			<div class="carousel_item">4</div>
+			<div class="carousel_item">5</div>
+			<div class="carousel_item">6</div>
+			<div class="carousel_item">7</div>
+		</div>
+		<div class="arr_prev">&lt;</div>
+		<div class="arr_next">&gt;</div>
+	</div>
+
+
+	<section id="about">
+		<h2>About</h2>
+	</section>
+
+	<section id="portfolio">
+		<h2>portfolio</h2>
+	</section>
+
+	<section id="contact">
+		<h2>contact</h2>
+	</section>
+
 	
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
 	
-	<script type="module">
+	<script >
+		// jQuery
 
-		// Promises 
+		const carousel = $('.carousel_wrap'); // query Selector all
+		const targetTransform = $('.carousel_item').first().outerWidth(true);
 
-		let promise = new Promise(function(resolve, reject) {
-				// setTimeout(()=>resolve(1), 1000);
-			 reject('404');
+		$('.arr_prev').click(()=>{
+			$('.carousel_item').first().before($('.carousel_item').last());
+			carousel.css({
+				'left': `-${targetTransform}px`
+			});
+			carousel.animate({
+				'left': 0
+			});
 		});
-
-		// promise.then(function(result){
-		// 	console.log(`Promise returned result: ${result}`);
-		// }, function(error){
-		// 	console.warn(`Was caught error ${error}`);
-		// })
-
-		// promise.then(
-		// 	result => console.log(`Promise returned result: ${result}`),
-		// 	error => console.warn(`Was caught error ${error}`)
-		// );
-
-		promise.then(result => console.log(`Promise returned result: ${result}`))
-			   .catch(error => console.warn(`Was caught error ${error}`))
-			   .finally(console.log('Finished work with promise'));
-
-
-
-		const p = new Promise((resolve, reject)=>{
-			confirm('Delete item from cart?') ? resolve('yes') : reject('no');
-		});
-
-		p.then(
-			res => console.log(`Deleting item: ${res}`),
-			err => console.warn(`Deleting item: ${err}`),
-		)
 		
+		$('.arr_next').click(()=>{
+			carousel.animate({
+				'left': `-${targetTransform}px`
+			}, 550, ()=>{
+				carousel.css({
+					'left': 0
+				});
+				$('.carousel_item').last().after($('.carousel_item').first());
+			})
+		});
 
-		// const xp = new Promise((resolve, reject) => {
-		// 	const xhr = new XMLHttpRequest();
-		// 	xhr.open('GET', 'data.json');
-		// 	xhr.send();
-		// 	xhr.onload = () => {
-		// 		if(xhr.status === 200){
-		// 			resolve(xhr.responseText);
-		// 		}
-		// 		else{
-		// 			reject(xhr.statusText);
-		// 		}
+
+		// $('.carousel_item').on('click', function(){
+		// 	alert($(this).text());
+		// });
+
+		$('.carousel_item').click(function(){
+			console.log($(this).text());
+		});
+
+
+		// Vanilla JS smooth scroll 2020+
+
+		// document.addEventListener('click', (e)=> {
+		// 	if(e.target.classList.contains('scroll_link')){
+		// 		e.preventDefault();
+		// 		let hash = e.target.href.match(/\#[a-z]{1,}/);
+		// 		const top = document.querySelector(`${hash}`).offsetTop;
+
+		// 		window.scrollTo({
+		// 			left: 0,
+		// 			top: top,
+		// 			behavior: 'smooth'
+		// 		});
 		// 	}
 		// });
 
-		// xp.then(result => console.log(JSON.parse(result)))
-		// 	.catch(error=> console.error(error));
+
+		// jqueryScrollTop
+
+		$(document).on('click', '.scroll_link', function(e){
+			e.preventDefault();
+			$('html, body').animate({
+				scrollTop: $(`${this.href.match(/\#[a-z]{1,}/)}`).offset().top
+			}, 1000);
+		});
 
 
-		let fp = await fetch('data.json');
-
-		if(fp.ok){
-			
-			let data = await fp.json();
-			console.log(data);
-		}
-		else{
-			console.error(`Error was occured ${fp.status}`);
-		}
-
-		// text(), json(), formData(), blob(), arrayBuffer
-
-		// {method, headers, body}
-
-		// async function foo(){
-		// 	return 0;
-		// }
-
-		// foo().then(res =>console.log(res));
-
-
-		// let val = await promise100
-
-
+		
+		
 	</script>
 
 
