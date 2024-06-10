@@ -11,78 +11,32 @@
 			box-sizing: border-box;
 		}
 
-		.carousel {
-			position: relative;
-			overflow: hidden;
-		}
-
-		.carousel_wrap{
+		.game{
+			margin: 100px auto;
+			width: 300px;
+			height: 300px;
 			display: flex;
-			position: relative;
+			flex-flow: row wrap;
 		}
 
-		.carousel_item{
-			flex: 0 0 300px;
-			height: 150px;
-			border: 2px solid black;
-			line-height: 150px;
+		.square {
+			width: 100px;
+			height: 100px;
+			border: 1px solid black;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			font-size: 50px;
-			text-align: center;
-			margin-right: 20px;
 		}
 
-		.arr_prev, .arr_next {
-			position: absolute;
-			top: 50px;
-			font-size: 50px;
-			left: 0;
-			transform: scaleX(0.5);
-			cursor: pointer;
-		}
-		.arr_next{
-			left: auto;
-			right: 0;
-		}
-
-		section {
-			height: 1000px;
-		}
 	</style>
 </head>
 <body>
 
-	<nav>
-		<a class="scroll_link" href="#about">About</a>
-		<a class="scroll_link" href="#portfolio">Portfolio</a>
-		<a class="scroll_link" href="#contact">Contact</a>
-	</nav>
+	<h1>Tic Tac Toe</h1>
+	<h2>Current player: <span class="player">X</span></h2>
 
-	<div class="carousel">
-		<div class="carousel_wrap">
-			<div class="carousel_item">1</div>
-			<div class="carousel_item">2</div>
-			<div class="carousel_item">3</div>
-			<div class="carousel_item">4</div>
-			<div class="carousel_item">5</div>
-			<div class="carousel_item">6</div>
-			<div class="carousel_item">7</div>
-		</div>
-		<div class="arr_prev">&lt;</div>
-		<div class="arr_next">&gt;</div>
-	</div>
-
-
-	<section id="about">
-		<h2>About</h2>
-	</section>
-
-	<section id="portfolio">
-		<h2>portfolio</h2>
-	</section>
-
-	<section id="contact">
-		<h2>contact</h2>
-	</section>
+	<div class="game"></div>
 
 	
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -90,70 +44,60 @@
   crossorigin="anonymous"></script>
 	
 	<script >
-		// jQuery
-
-		const carousel = $('.carousel_wrap'); // query Selector all
-		const targetTransform = $('.carousel_item').first().outerWidth(true);
-
-		$('.arr_prev').click(()=>{
-			$('.carousel_item').first().before($('.carousel_item').last());
-			carousel.css({
-				'left': `-${targetTransform}px`
-			});
-			carousel.animate({
-				'left': 0
-			});
-		});
 		
-		$('.arr_next').click(()=>{
-			carousel.animate({
-				'left': `-${targetTransform}px`
-			}, 550, ()=>{
-				carousel.css({
-					'left': 0
-				});
-				$('.carousel_item').last().after($('.carousel_item').first());
-			})
+		// Tic Tac Toe Game
+
+		const cells = ['', '', '', '', '', '', '', '', ''];
+		let isActiveX = true;
+
+		function init(){
+			cells.forEach((item, index) => {
+				$('.game').append(`<div class="square" data-cell='${index}'>${item}</square`);
+			});
+		}
+		init();
+
+		$('.game').on('click', function(e){
+			if($(e.target).text() === ''){
+				$(e.target).text(isActiveX ? 'X' : '0');
+				cells[+e.target.dataset.cell] = isActiveX ? 'X' : '0';
+				setTimeout(()=>{
+					isActiveX = !isActiveX;
+					$('.player').text(isActiveX ? 'X' : '0');
+					gameOver();
+				}, 10)
+			}
 		});
 
-
-		// $('.carousel_item').on('click', function(){
-		// 	alert($(this).text());
-		// });
-
-		$('.carousel_item').click(function(){
-			console.log($(this).text());
-		});
-
-
-		// Vanilla JS smooth scroll 2020+
-
-		// document.addEventListener('click', (e)=> {
-		// 	if(e.target.classList.contains('scroll_link')){
-		// 		e.preventDefault();
-		// 		let hash = e.target.href.match(/\#[a-z]{1,}/);
-		// 		const top = document.querySelector(`${hash}`).offsetTop;
-
-		// 		window.scrollTo({
-		// 			left: 0,
-		// 			top: top,
-		// 			behavior: 'smooth'
-		// 		});
-		// 	}
-		// });
+		function gameOver(){
+			if(!cells.includes('')){
+				alert('Nobody wins! Game over!');
+			}
+			else{
+				if(cells[0] === cells[1] && cells[1] === cells[2] && cells[0] !== '' ||
+				cells[3] === cells[4] && cells[4] === cells[5] && cells[5] !== '' ||
+				cells[6] === cells[7] && cells[7] === cells[8] && cells[8] !== '' ||
+				cells[0] === cells[3] && cells[3] === cells[6] && cells[0] !== '' ||
+				cells[4] === cells[1] && cells[1] === cells[7] && cells[1] !== '' ||
+				cells[2] === cells[5] && cells[5] === cells[8] && cells[8] !== '' ||
+				cells[0] === cells[4] && cells[4] === cells[8] && cells[0] !== '' ||
+				cells[2] === cells[4] && cells[4] === cells[6] && cells[6] !== '')
+				{
+					alert(`The winner is ${isActiveX ? '0' : 'X'}`);
+					restartGame();
+				}
+			}
+		}
 
 
-		// jqueryScrollTop
+		function restartGame(){
+			cells.fill('');
+			isActiveX = true;
+			$('.player').text(isActiveX ? 'X' : '0');
+			$('.game').html('');
+			init();
+		}
 
-		$(document).on('click', '.scroll_link', function(e){
-			e.preventDefault();
-			$('html, body').animate({
-				scrollTop: $(`${this.href.match(/\#[a-z]{1,}/)}`).offset().top
-			}, 1000);
-		});
-
-
-		
 		
 	</script>
 
