@@ -12,21 +12,9 @@
 		}
 
 		.game{
-			margin: 100px auto;
-			width: 400px;
-			height: 400px;
-			display: flex;
-			flex-flow: row wrap;
-		}
-
-		.square {
-			width: 100px;
-			height: 100px;
+			display: block;
 			border: 1px solid black;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			font-size: 50px;
+			margin: 100px auto;
 		}
 
 	</style>
@@ -34,7 +22,7 @@
 <body>
 
 
-	<div class="game"></div>
+	<canvas width="400" height="300" class="game"></canvas>
 
 	
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -43,250 +31,74 @@
 	
 	<script >
 		
-		// 2048
+		// canvas
 
-		let squares = new Array(16);
-		squares.fill('');
+		const canvas = document.querySelector('.game');
+		const ctx = canvas.getContext('2d');
+		let interval;
+		const maxRad = 25;
 
-		function drawGame(){
-			createNum();
-			$('.game').html('');
-			squares.forEach((item, index) => {
-				$('.game').append(`<div class="square" data-id="${index}">${item}</div>`);
-			});
+		const balls = [];
+		const maxCount = 10;
+
+		function createBall(){
+			const radius = Math.floor(Math.random() * maxRad - 10 + 10);
+			const r = Math.floor(Math.random() * (255 - 100) + 100);
+			const g = Math.floor(Math.random() * (255 - 100) + 100);
+			const b = Math.floor(Math.random() * (255 - 100) + 100);
+			const color = `rgb(${r}, ${g}, ${b})`;
+			const ball = {
+				radius: radius,
+				color: color,
+				x: radius,
+				y: radius,
+				d_x: 3,
+				d_y: 3
+			}
+			balls.push(ball);
 		}
-		
-		drawGame();
 
-	
+		function drawBall(ball){
+			ctx.fillStyle = ball.color;
+			ctx.beginPath();
+			ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2, true);
+			ctx.fill();
+		}
 
-		function createNum(){
-			const num = Math.random() > 0.85 ? 4 : 2;
-			const freeCells = [];
-			squares.forEach((item, index) => item === '' ? freeCells.push(index) : null);
-			const cell = Math.floor(Math.random()*freeCells.length-1);
-			const pos = freeCells[cell];
+		function moveBall(ball){
+
+			if(ball.x  > canvas.width - ball.d_x || ball.x + ball.d_x <= 0){
+				ball.d_x = -ball.d_x;
+			}
+			if(ball.y > canvas.height - ball.d_y || ball.y + ball.d_y<=  0){
+				ball.d_y = -ball.d_y;
+			}
+			ball.x += ball.d_x;
+			ball.y += ball.d_y;
 			
-			squares[pos] = num;
-			$(`.square:nth-of-type(${cell+1})`).text(num);
-			
-			if(freeCells.length <= 1){
-				checkGameOver();
-			}
 		}
 
-		function moveLeft(){
-			const rows = createRows();
-			const input = rows.toString();
 
-			for(let i = 0; i < rows.length; i++){
-				for(let j = 1;  j < rows[i].length; j++){
-					for(let k = j; k > 0; k--){
-						if(rows[i][k-1] === ''){
-							rows[i][k-1] = rows[i][k];
-							rows[i][k] = '';
-						}
-						if(rows[i][k] === rows[i][k-1] && rows[i][k] != ''){
-							rows[i][k-1] = rows[i][k-1]*2;
-							rows[i][k] = '';
-							// add score
-						}
-					}
-				}
-			}
+		function clearCanvas(){
+			ctx.clearRect(0,0, canvas.width, canvas.height);
+		}
 
-			const ouput = rows.toString();
-			if(input === ouput){
-				console.error('Nothing was moved');
+		interval = setInterval(()=>{
+			if(balls.length < maxCount){
+				createBall();
 			}
 			else{
-				squares = rows.flat(2);
-				drawGame();
+				clearInterval(interval);
 			}
-		}
+		}, 1000);
 
-		function moveRight(){
-			const rows = createRows();
-			const input = rows.toString();
-
-			for(let i = 0; i < rows.length; i++){
-				for(let j = rows[i].length -1; j > 0; j--){
-					for(let k = 0; k < rows[i].length; k++){
-						if(rows[i][k+1] === ''){
-							rows[i][k+1] = rows[i][k];
-							rows[i][k] = '';
-						}
-						if(rows[i][k] === rows[i][k+1] && rows[i][k] != ''){
-							rows[i][k+1] = rows[i][k+1]*2;
-							rows[i][k] = '';
-							// add score
-						}
-					}
-				}
+		setInterval(()=>{
+				clearCanvas();
+			for(let b of balls){
+				drawBall(b);
+				moveBall(b);
 			}
-
-			const ouput = rows.toString();
-			if(input === ouput){
-				console.error('Nothing was moved');
-			}
-			else{
-				squares = rows.flat(2);
-				drawGame();
-			}
-		}
-
-		function moveUp(){
-			const cols = createCols();
-			const input = cols.toString();
-
-			for(let i = 0; i < cols.length; i++){
-				for(let j = 1;  j < cols[i].length; j++){
-					for(let k = j; k > 0; k--){
-						if(cols[i][k-1] === ''){
-							cols[i][k-1] = cols[i][k];
-							cols[i][k] = '';
-						}
-						if(cols[i][k] === cols[i][k-1] && cols[i][k] != ''){
-							cols[i][k-1] = cols[i][k-1]*2;
-							cols[i][k] = '';
-							// add score
-						}
-					}
-				}
-			}
-
-			const ouput = cols.toString();
-			if(input === ouput){
-				console.error('Nothing was moved');
-			}
-			else{
-				squares = flatenCols(cols);
-				drawGame();
-			}
-		}
-
-
-		function moveDown(){
-			const cols = createCols();
-			const input = cols.toString();
-
-			for(let i = 0; i < cols.length; i++){
-				for(let j = cols[i].length -1; j > 0; j--){
-					for(let k = 0; k < cols[i].length; k++){
-						if(cols[i][k+1] === ''){
-							cols[i][k+1] = cols[i][k];
-							cols[i][k] = '';
-						}
-						if(cols[i][k] === cols[i][k+1] && cols[i][k] != ''){
-							cols[i][k+1] = cols[i][k+1]*2;
-							cols[i][k] = '';
-							// add score
-						}
-					}
-				}
-			}
-
-			const ouput = cols.toString();
-			if(input === ouput){
-				console.error('Nothing was moved');
-			}
-			else{
-				squares = flatenCols(cols);
-				drawGame();
-			}
-		}
-
-		function checkGameOver(){
-			const canMove = checkCanMove();
-			if(!canMove.canMoveLeftRight && !canMove.canMoveUpDown){
-				finishGame();
-			}
-		}
-
-		function finishGame(){
-			alert('Game Over');
-		}
-
-		function checkCanMove(num){
-			const cols = createCols();
-			const rows = createRows();
-
-			let canMoveLeftRight = false;
-			let canMoveUpDown = false;
-
-			for(let i = 0; i < cols.length; i++){
-				for(let j = 1; j < cols[i].length; j++){
-					if(cols[i][j] === cols[i][j-1] || (cols[i][j] === '' || cols[i][j-1] === '')){
-						canMoveUpDown = true;
-					}
-				}
-			}
-
-			for(let i = 0; i < rows.length; i++){
-				for(let j = 1; j < rows[i].length; j++){
-					if(rows[i][j] === rows[i][j-1] || (rows[i][j] === '' || rows[i][j-1] === '')){
-						canMoveLeftRight = true;
-					}
-				}
-			}
-
-			return {
-				canMoveLeftRight: canMoveLeftRight,
-				canMoveUpDown: canMoveUpDown
-			}
-		}
-
-		function createRows(){
-			const newSquares = [];
-			let row = [];
-			for(let i = 0; i < squares.length; i++){
-				row.push(squares[i]);
-				if((i+1)%4 === 0){
-					newSquares.push(row);
-					row = [];
-				}
-			}
-			return newSquares;
-		}
-
-		function createCols(){
-			const newSquares = [];
-			for(let i = 0; i < 4; i++){
-				const col = [];
-				for(let j = 0; j < 4; j++){
-					col.push(squares[(4*j) + i]);
-				}
-				newSquares.push(col);
-			}
-			return newSquares;
-		}
-
-		function flatenCols(arr){
-			const flat = [];
-			for(let i = 0; i < arr.length; i++){ //0 1 2 3 4
-				for(let j = 0; j < arr[i].length; j++){ // 0 4 8 12   1 5 9 13  2 6 10 14
-					flat.push(arr[j][i]);
-				}
-			}
-			return flat;
-		}
-
-
-
-		$(document).on('keyup', (e)=>{
-			if(e.key === 'ArrowLeft'){
-				moveLeft();
-			}
-			if(e.key === 'ArrowRight'){
-				moveRight();
-			}
-			if(e.key === 'ArrowUp'){
-				moveUp();
-			}
-			if(e.key === 'ArrowDown'){
-				moveDown();
-			}
-		});
+		}, 30);
 
 		
 	</script>
