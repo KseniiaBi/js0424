@@ -13,8 +13,8 @@
 
 		.game{
 			margin: 100px auto;
-			width: 300px;
-			height: 300px;
+			width: 400px;
+			height: 400px;
 			display: flex;
 			flex-flow: row wrap;
 		}
@@ -33,8 +33,6 @@
 </head>
 <body>
 
-	<h1>Tic Tac Toe</h1>
-	<h2>Current player: <span class="player">X</span></h2>
 
 	<div class="game"></div>
 
@@ -45,58 +43,250 @@
 	
 	<script >
 		
-		// Tic Tac Toe Game
+		// 2048
 
-		const cells = ['', '', '', '', '', '', '', '', ''];
-		let isActiveX = true;
+		let squares = new Array(16);
+		squares.fill('');
 
-		function init(){
-			cells.forEach((item, index) => {
-				$('.game').append(`<div class="square" data-cell='${index}'>${item}</square`);
+		function drawGame(){
+			createNum();
+			$('.game').html('');
+			squares.forEach((item, index) => {
+				$('.game').append(`<div class="square" data-id="${index}">${item}</div>`);
 			});
 		}
-		init();
+		
+		drawGame();
 
-		$('.game').on('click', function(e){
-			if($(e.target).text() === ''){
-				$(e.target).text(isActiveX ? 'X' : '0');
-				cells[+e.target.dataset.cell] = isActiveX ? 'X' : '0';
-				setTimeout(()=>{
-					isActiveX = !isActiveX;
-					$('.player').text(isActiveX ? 'X' : '0');
-					gameOver();
-				}, 10)
-			}
-		});
+	
 
-		function gameOver(){
-			if(!cells.includes('')){
-				alert('Nobody wins! Game over!');
+		function createNum(){
+			const num = Math.random() > 0.85 ? 4 : 2;
+			const freeCells = [];
+			squares.forEach((item, index) => item === '' ? freeCells.push(index) : null);
+			const cell = Math.floor(Math.random()*freeCells.length-1);
+			const pos = freeCells[cell];
+			
+			squares[pos] = num;
+			$(`.square:nth-of-type(${cell+1})`).text(num);
+			
+			if(freeCells.length <= 1){
+				checkGameOver();
 			}
-			else{
-				if(cells[0] === cells[1] && cells[1] === cells[2] && cells[0] !== '' ||
-				cells[3] === cells[4] && cells[4] === cells[5] && cells[5] !== '' ||
-				cells[6] === cells[7] && cells[7] === cells[8] && cells[8] !== '' ||
-				cells[0] === cells[3] && cells[3] === cells[6] && cells[0] !== '' ||
-				cells[4] === cells[1] && cells[1] === cells[7] && cells[1] !== '' ||
-				cells[2] === cells[5] && cells[5] === cells[8] && cells[8] !== '' ||
-				cells[0] === cells[4] && cells[4] === cells[8] && cells[0] !== '' ||
-				cells[2] === cells[4] && cells[4] === cells[6] && cells[6] !== '')
-				{
-					alert(`The winner is ${isActiveX ? '0' : 'X'}`);
-					restartGame();
+		}
+
+		function moveLeft(){
+			const rows = createRows();
+			const input = rows.toString();
+
+			for(let i = 0; i < rows.length; i++){
+				for(let j = 1;  j < rows[i].length; j++){
+					for(let k = j; k > 0; k--){
+						if(rows[i][k-1] === ''){
+							rows[i][k-1] = rows[i][k];
+							rows[i][k] = '';
+						}
+						if(rows[i][k] === rows[i][k-1] && rows[i][k] != ''){
+							rows[i][k-1] = rows[i][k-1]*2;
+							rows[i][k] = '';
+							// add score
+						}
+					}
 				}
 			}
+
+			const ouput = rows.toString();
+			if(input === ouput){
+				console.error('Nothing was moved');
+			}
+			else{
+				squares = rows.flat(2);
+				drawGame();
+			}
+		}
+
+		function moveRight(){
+			const rows = createRows();
+			const input = rows.toString();
+
+			for(let i = 0; i < rows.length; i++){
+				for(let j = rows[i].length -1; j > 0; j--){
+					for(let k = 0; k < rows[i].length; k++){
+						if(rows[i][k+1] === ''){
+							rows[i][k+1] = rows[i][k];
+							rows[i][k] = '';
+						}
+						if(rows[i][k] === rows[i][k+1] && rows[i][k] != ''){
+							rows[i][k+1] = rows[i][k+1]*2;
+							rows[i][k] = '';
+							// add score
+						}
+					}
+				}
+			}
+
+			const ouput = rows.toString();
+			if(input === ouput){
+				console.error('Nothing was moved');
+			}
+			else{
+				squares = rows.flat(2);
+				drawGame();
+			}
+		}
+
+		function moveUp(){
+			const cols = createCols();
+			const input = cols.toString();
+
+			for(let i = 0; i < cols.length; i++){
+				for(let j = 1;  j < cols[i].length; j++){
+					for(let k = j; k > 0; k--){
+						if(cols[i][k-1] === ''){
+							cols[i][k-1] = cols[i][k];
+							cols[i][k] = '';
+						}
+						if(cols[i][k] === cols[i][k-1] && cols[i][k] != ''){
+							cols[i][k-1] = cols[i][k-1]*2;
+							cols[i][k] = '';
+							// add score
+						}
+					}
+				}
+			}
+
+			const ouput = cols.toString();
+			if(input === ouput){
+				console.error('Nothing was moved');
+			}
+			else{
+				squares = flatenCols(cols);
+				drawGame();
+			}
 		}
 
 
-		function restartGame(){
-			cells.fill('');
-			isActiveX = true;
-			$('.player').text(isActiveX ? 'X' : '0');
-			$('.game').html('');
-			init();
+		function moveDown(){
+			const cols = createCols();
+			const input = cols.toString();
+
+			for(let i = 0; i < cols.length; i++){
+				for(let j = cols[i].length -1; j > 0; j--){
+					for(let k = 0; k < cols[i].length; k++){
+						if(cols[i][k+1] === ''){
+							cols[i][k+1] = cols[i][k];
+							cols[i][k] = '';
+						}
+						if(cols[i][k] === cols[i][k+1] && cols[i][k] != ''){
+							cols[i][k+1] = cols[i][k+1]*2;
+							cols[i][k] = '';
+							// add score
+						}
+					}
+				}
+			}
+
+			const ouput = cols.toString();
+			if(input === ouput){
+				console.error('Nothing was moved');
+			}
+			else{
+				squares = flatenCols(cols);
+				drawGame();
+			}
 		}
+
+		function checkGameOver(){
+			const canMove = checkCanMove();
+			if(!canMove.canMoveLeftRight && !canMove.canMoveUpDown){
+				finishGame();
+			}
+		}
+
+		function finishGame(){
+			alert('Game Over');
+		}
+
+		function checkCanMove(num){
+			const cols = createCols();
+			const rows = createRows();
+
+			let canMoveLeftRight = false;
+			let canMoveUpDown = false;
+
+			for(let i = 0; i < cols.length; i++){
+				for(let j = 1; j < cols[i].length; j++){
+					if(cols[i][j] === cols[i][j-1] || (cols[i][j] === '' || cols[i][j-1] === '')){
+						canMoveUpDown = true;
+					}
+				}
+			}
+
+			for(let i = 0; i < rows.length; i++){
+				for(let j = 1; j < rows[i].length; j++){
+					if(rows[i][j] === rows[i][j-1] || (rows[i][j] === '' || rows[i][j-1] === '')){
+						canMoveLeftRight = true;
+					}
+				}
+			}
+
+			return {
+				canMoveLeftRight: canMoveLeftRight,
+				canMoveUpDown: canMoveUpDown
+			}
+		}
+
+		function createRows(){
+			const newSquares = [];
+			let row = [];
+			for(let i = 0; i < squares.length; i++){
+				row.push(squares[i]);
+				if((i+1)%4 === 0){
+					newSquares.push(row);
+					row = [];
+				}
+			}
+			return newSquares;
+		}
+
+		function createCols(){
+			const newSquares = [];
+			for(let i = 0; i < 4; i++){
+				const col = [];
+				for(let j = 0; j < 4; j++){
+					col.push(squares[(4*j) + i]);
+				}
+				newSquares.push(col);
+			}
+			return newSquares;
+		}
+
+		function flatenCols(arr){
+			const flat = [];
+			for(let i = 0; i < arr.length; i++){ //0 1 2 3 4
+				for(let j = 0; j < arr[i].length; j++){ // 0 4 8 12   1 5 9 13  2 6 10 14
+					flat.push(arr[j][i]);
+				}
+			}
+			return flat;
+		}
+
+
+
+		$(document).on('keyup', (e)=>{
+			if(e.key === 'ArrowLeft'){
+				moveLeft();
+			}
+			if(e.key === 'ArrowRight'){
+				moveRight();
+			}
+			if(e.key === 'ArrowUp'){
+				moveUp();
+			}
+			if(e.key === 'ArrowDown'){
+				moveDown();
+			}
+		});
 
 		
 	</script>
