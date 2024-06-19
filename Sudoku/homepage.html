@@ -1,0 +1,181 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>SUDOKU</title>
+</head>
+<style>
+	h2{
+		text-align: center;
+		margin: 0 0 10px 0;
+		color: #0000FF;
+		font-size: 50px;
+	}
+	
+	span{
+		font-size: 30px;
+		text-align: center;
+		border: 1px solid #800080;
+		border-radius: 5px;
+		padding: 10px 15px 10px 15px;
+		margin: 0 10px 0 0;
+		background-color: #800080;
+		color: #fff;
+	}
+	.number{
+		text-align: center;
+		margin: 30px 0 0 0;
+		
+	}
+	.number span{
+		cursor: pointer;
+	}
+	#cells{
+		display: flex;
+		justify-content: center;
+		
+	}
+	table{
+		border-collapse: collapse;
+		border: 2px solid #696969;
+		cursor: pointer;
+	}
+	td, th {
+		border: 1px solid #c0c0c0;
+		padding: 30px 30px;
+	}
+	th{
+		background-color: #ede2e2;
+	}
+	td{
+		text-align: center;
+	}
+
+</style>
+<body>
+	<h2>SUDOKU</h2>
+	<div id ="cells">
+		<table>
+			<tr>
+				<td class="c1"></td>
+				<td class="c2"></td>
+				<td class="c3"></td>
+				<td class="c4"></td>
+				<td class="c5"></td>
+				<td class="c6"></td>
+				<td class="c7"></td>
+				<td class="c8"></td>
+				<td class="c9"></td>
+			</tr>
+			<tr>
+				<td class="c10"></td>
+				<td class="c11"></td>
+				<td class="c12"></td>
+				<td class="c13"></td>
+				<td class="c14"></td>
+				<td class="c15"></td>
+				<td class="c16"></td>
+				<td class="c17"></td>
+				<td class="c18"></td>
+			</tr>
+			<tr>
+				<td class="c19"></td>
+				<td class="c20"></td>
+				<td class="c21"></td>
+				<td class="c22"></td>
+				<td class="c23"></td>
+				<td class="c24"></td>
+				<td class="c25"></td>
+				<td class="c26"></td>
+				<td class="c27"></td>
+			</tr>
+			<tr>
+				<td class="c28"></td>
+				<td class="c29"></td>
+				<td class="c30"></td>
+				<td class="c31"></td>
+				<td class="c32"></td>
+				<td class="c33"></td>
+				<td class="c34"></td>
+				<td class="c35"></td>
+				<td class="c36"></td>
+			</tr>
+			<tr>
+				<td class="c37"></td>
+				<td class="c38"></td>
+				<td class="c39"></td>
+				<td class="c40"></td>
+				<td class="c41"></td>
+				<td class="c42"></td>
+				<td class="c43"></td>
+				<td class="c44"></td>
+				<td class="c45"></td>
+			</tr>
+			<tr>
+				<td class="c46"></td>
+				<td class="c47"></td>
+				<td class="c48"></td>
+				<td class="c49"></td>
+				<td class="c50"></td>
+				<td class="c51"></td>
+				<td class="c52"></td>
+				<td class="c53"></td>
+				<td class="c54"></td>
+			</tr>
+			<tr>
+				<td class="c55"></td>
+				<td class="c56"></td>
+				<td class="c57"></td>
+				<td class="c58"></td>
+				<td class="c59"></td>
+				<td class="c60"></td>
+				<td class="c61"></td>
+				<td class="c62"></td>
+				<td class="c63"></td>
+			</tr>
+			<tr>
+				<td class="c64"></td>
+				<td class="c65"></td>
+				<td class="c66"></td>
+				<td class="c67"></td>
+				<td class="c68"></td>
+				<td class="c69"></td>
+				<td class="c70"></td>
+				<td class="c71"></td>
+				<td class="c72"></td>
+			</tr>
+			<tr>
+				<td class="c73"></td>
+				<td class="c74"></td>
+				<td class="c75"></td>
+				<td class="c76"></td>
+				<td class="c77"></td>
+				<td class="c78"></td>
+				<td class="c79"></td>
+				<td class="c80"></td>
+				<td class="c81"></td>
+			</tr>
+		</table>
+	</div>
+	<div class="number">
+		<span>1</span>
+		<span>2</span>
+		<span>3</span>
+		<span>4</span>
+		<span>5</span>
+		<span>6</span>
+		<span>7</span>
+		<span>8</span>
+		<span>9</span>
+	</div>
+	<script>
+		const cells = document.getElementsById('cells');
+		const number = document.getElementsByClassName('number');
+		const span = document.querySelectorAll('span');
+		
+
+
+
+	</script>
+</body>
+</html>
