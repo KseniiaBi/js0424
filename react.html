@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .btn {
+        border-radius: 3px;
+        text-align: center;
+        padding: 10px 20px;
+        width: 120px;
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .btn_black{
+        background-color: black;
+        color: #ffffff;
+      }
+
+      .btn_white{
+        background-color: #ffffff;
+        color: #000000;
+        border: 1px solid #000000;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+    
+      function MyApp() {
+        return (
+          <>
+            <Header />
+            <Layout>
+                <h1>Hello, user</h1>
+                <Button text='click me!' color="black" handler={greet} />
+                <Button text='Click me too!' color="white" handler={foo} />
+            </Layout>
+            <Footer copy=" &copy; JS 04.2024" />
+          </>
+        )
+      }
+      
+      function foo(){
+        console.warn('Ahaha');
+      }
+
+      function greet(){
+        console.log('Hello, user!');
+      }
+
+      const Button = ({text, handler, color}) => <button className={`btn btn_${color}`} onMouseOver={handler}>{text}</button>
+
+      const Header = () => <header>Logo</header>;
+
+      const Footer = ({copy}) => <footer>{copy}</footer>;
+
+      const Layout = ({children}) => {
+        return (
+          <main>
+              {children}
+            </main>
+        );
+      }
+
+
+      const container = document.getElementById('root');
+      const root = ReactDOM.createRoot(container);
+      root.render(
+        <MyApp />
+        );
+
+    </script>
+
+  </body>
+</html>
