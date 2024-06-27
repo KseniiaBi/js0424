@@ -1,11 +1,13 @@
+import Link from "next/link";
+
 export default function Header () {
     return (
         <header style={navbar}>
             <span className="logo">LOGO</span>
             <nav>
-                <a className="link" href="#">Home</a>
-                <a className="link"  href="#">Catalog</a>
-                <a className="link" href="#">Cart</a>
+                <Link className="link" href="/">Home</Link>
+                <Link className="link"  href="/catalog">Catalog</Link>
+                <Link className="link" href="/cart">Cart</Link>
             </nav>
         </header>
     );

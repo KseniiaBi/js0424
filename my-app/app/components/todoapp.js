@@ -1,33 +1,14 @@
 'use client'
 import { useRef, useState } from "react";
-
-// main concept of useState hook
-function Counter(){
-    const [count, setCount] = useState(0);
-
-    function increment(){
-        setCount(count+1);
-    }
-    function decrement(){
-        setCount(count-1);
-    }
-
-    return(
-        <div>
-            <button onClick={decrement}>-</button>
-            <span>{count}</span>
-            <button onClick={increment}>+</button>
-        </div>
-    )
-}
+import useInput from "./useInput";
+import Counter from "./counter";
+import { Component } from "react";
 
 export default function ToDoApp(){
     // const todos = [];
     const myRef = useRef(null);
 
     const [todos, setTodo] = useState([]);
-
-
     const addTask = (e) => {
         e.preventDefault();
         const text = myRef.current.value;
@@ -35,13 +16,18 @@ export default function ToDoApp(){
         myRef.current.value = '';
     }
 
+    const [todo, setTodoText] = useInput('');
+
     return(
     <>
         <Counter />
+        <h1>{todo}</h1>
         <form onSubmit={addTask}>
-            <input ref={myRef} placeholder="Type your task" />
+            <input onChange={(e)=>setTodoText(e)} ref={myRef} placeholder="Type your task" />
             <input type='submit' value='save' />
         </form>
+
+
 
         {
             todos.length > 0 ? <ol>
@@ -55,8 +41,10 @@ export default function ToDoApp(){
     )
 }
 
-const Todo = ({task, id}) => {
-    return(
-        <li key={id}>{task}</li>
-    )
+// const Todo = ({task, id}) =>  <li key={id}>{task}</li>;
+
+class Todo extends Component{
+    render(){
+        return  <li key={this.props.id}>{this.props.task}</li>
+    }
 }
